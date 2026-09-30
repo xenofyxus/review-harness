@@ -1,0 +1,9 @@
+# Aider does not discover commands or skills, so this file makes it load
+# AGENTS.md into every chat. Then ask for what you want in plain words:
+#
+#   run the review setup workflow
+#   run the review workflow for peer priya
+#   run the review status workflow
+#
+# Aider picks this file up from the repository root. Hand-written, not generated.
+read: [AGENTS.md]

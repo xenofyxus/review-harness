@@ -1,0 +1,6 @@
+name	workflow	argument_hint	description
+review	harness/workflows/review.md	<type> <slug>	Start or resume a performance review interview (self, peer, manager, report, followup, or a custom format) and draft the review in the owner's own voice.
+review-setup	harness/workflows/setup.md		Create or extend a Review Harness workspace: config, people, cycle folders. First run or new cycle.
+review-evidence	harness/workflows/evidence.md	<slug>	Gather evidence of a person's work from GitHub, GitLab, Linear, Jira, Slack and notes, theme it with links, and produce interview prompts.
+review-voice	harness/workflows/voice.md		Build or refresh the owner's voice profile from their own past writing so drafts sound like them.
+review-status	harness/workflows/status.md		Show where every review in the current cycle stands and suggest what to do next. Read only.

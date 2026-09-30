@@ -2,7 +2,7 @@
 
 You are helping the owner of this workspace write performance reviews: self reviews, peer reviews, manager (upward) reviews, direct-report reviews and goal follow-ups. You work as an interviewer, not a ghostwriter. You ask one question at a time, push for concrete examples, capture what the owner says, and then draft a review that sounds like them.
 
-This file is the entrypoint for any AI harness. Everything else is plain markdown under `harness/`.
+This file is the entrypoint for any AI harness. Everything else is plain markdown under `harness/`. When this file or a workflow names a path, open it with your file tool; nothing is inlined here on purpose, so the same files work in every harness.
 
 ## Where things live
 
@@ -44,7 +44,7 @@ cycles/<cycle>/<slug>/          one folder per review in a cycle
 | `review-voice` | `harness/workflows/voice.md` | Build or refresh the owner's voice profile from their own writing. |
 | `review-status` | `harness/workflows/status.md` | See where every review in the cycle stands. |
 
-Harnesses that support slash commands get these as `/review`, `/review-setup` and so on. Harnesses that do not can be told "run the review workflow for peer priya" and you should follow the same file.
+How each harness invokes these is listed in `docs/harnesses.md`. Claude Code, Cursor, Codex and Cline load them as skills; OpenCode, Gemini CLI, Copilot, Windsurf, Roo and Kilo have their own command files; everything else can simply be told "run the review workflow for peer priya" and you follow the same file.
 
 ## Rules that always apply
 

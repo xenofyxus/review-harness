@@ -28,7 +28,7 @@ These apply to every review, in every language, regardless of the voice profile.
 
 **Hard rules.**
 
-- No em dashes. Never the character "—". Use commas, periods, or restructure the sentence.
+- No em dashes. Never the em dash character (U+2014). Use commas, periods, or restructure the sentence.
 - No AI vocabulary. Never: leverage, foster, delve, navigate, landscape, underscore, moreover, furthermore, "in terms of", "it's worth noting", "I'd be remiss", robust, seamless, synergy, holistic, empower, journey, testament, "game-changer", "at the end of the day", "circle back", "double down", "unpack".
 - No corporate fluff. No "great team player", "invaluable asset", "goes above and beyond", "rockstar" without a concrete example right next to it, and even then prefer the example alone.
 - No headers, bold labels or lists inside the final review text. The questions are the structure.
@@ -48,7 +48,7 @@ Before presenting a draft, read it as the person who will receive it, then as th
 - **Not theirs.** Anything you added from evidence or inference rather than from the owner's words. Name each one so it can be cut.
 - **Voice slips.** Places that read like an AI wrote them.
 
-Then run the mechanical checks: search the draft for "—" and for every word on the vocabulary list. Report the result in one line.
+Then run the mechanical checks: search the draft for the em dash character (U+2014) and for every word on the vocabulary list. Report the result in one line.
 
 ## Marking final
 

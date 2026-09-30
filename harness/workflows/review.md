@@ -45,7 +45,7 @@ Rules while interviewing:
 When every question is answered or skipped:
 
 1. Set `status: drafting`.
-2. Write the full review to `review.md` with a first line `<!-- draft 1 -->`. Structure: the format's questions in bold, each followed by the answer in paragraphs. Follow `harness/principles.md` and the voice profile. Write in the language from `config.yml`.
+2. Write the full review to `review.md` with a first line `<!-- draft 1 -->`. Structure: one title line, `# <Format title> for <Name>, <cycle>`, then the format's questions in bold, each followed by the answer in paragraphs. No other headers, no lists. Follow `harness/principles.md` and the voice profile. Write in the language from `config.yml`.
 3. Run the draft review checklist from principles. Write the flags as a short list that lives in your message, not in the file.
 4. Run the mechanical checks: em dashes, vocabulary list, bullet points inside answers, headers inside answers. Report in one line.
 5. Present the full draft text and the flags together. The owner may not open the file, so the draft goes in the message in full.
