@@ -1,0 +1,12 @@
+{
+  "name": "review-harness",
+  "description": "Marketplace for the Review Harness plugin.",
+  "owner": { "name": "Anton Anderzén", "url": "https://github.com/xenofyxus" },
+  "plugins": [
+    {
+      "name": "review-harness",
+      "source": "./",
+      "description": "Interview-driven performance reviews that sound like you."
+    }
+  ]
+}

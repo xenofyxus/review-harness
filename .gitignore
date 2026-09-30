@@ -1,0 +1,7 @@
+# Your workspace is committed by default, so a private copy of this repo is your review archive.
+# If you would rather keep it out of git, uncomment the two lines below.
+# workspace/**
+# !workspace/README.md
+
+workspace/cycles/**/evidence-raw.md
+.DS_Store

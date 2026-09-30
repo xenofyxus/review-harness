@@ -1,0 +1,40 @@
+# Review Harness workspace config.
+# Edit by hand or run the setup workflow. Slugs are lowercase, used as folder names.
+
+me:
+  name: Maya Lindqvist
+  slug: self
+  role: Senior Backend Engineer
+  company: Northwind Labs
+  language: en            # language the reviews are written in (en, sv, de, ...)
+  handles:                # optional, used by the evidence workflow
+    github: mayalq
+    gitlab:
+    slack:                # your Slack member ID, e.g. U0123ABCD
+    linear:               # your Linear display name or email
+    jira:
+
+cycle: 2026-h2            # current cycle, a folder under cycles/
+
+people:
+  - name: Tomas Berg
+    slug: tomas
+    relation: manager     # manager | peer | report
+    role: Backend Team Lead
+  - name: Priya Nair
+    slug: priya
+    relation: peer
+    role: Backend Engineer
+
+reviews:                  # what needs writing this cycle
+  - person: self
+    format: self          # a file in harness/formats/ or workspace/formats/
+  - person: tomas
+    format: manager
+  - person: priya
+    format: peer
+
+evidence:
+  window_months: 6
+  sources: [github, linear, slack, notes]   # tried in this order, skipped if unavailable
+  github_orgs: [northwind-labs]
