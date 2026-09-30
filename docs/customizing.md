@@ -23,7 +23,7 @@ me:
   language: sv
 ```
 
-The questions themselves are separate. Translated formats live under `harness/formats/<lang>/`, for example `harness/formats/<lang>/peer.md`. The review workflow reads `workspace/formats/<type>.md` first, so copy the translation there, or paste your form's questions as above. If you translate a format, consider sending it upstream; see [CONTRIBUTING.md](../CONTRIBUTING.md).
+The questions themselves are separate. Translated formats live under `harness/formats/<lang>/`, so a Swedish peer format would be harness/formats/sv/peer.md. The review workflow reads `workspace/formats/<type>.md` first, so copy the translation there, or paste your form's questions as above. If you translate a format, consider sending it upstream; see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Adjust hints and checklists
 
