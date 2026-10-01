@@ -1,6 +1,6 @@
 # Customizing
 
-Everything the harness does comes from markdown, so changing it means editing markdown. The workspace wins over the harness wherever both have a file, which keeps your changes out of the way of upstream updates.
+Everything the harness does comes from markdown, so changing it means editing markdown. Formats are the one thing you can override without touching the upstream files: a copy in `workspace/formats/` wins over `harness/formats/`. The rest of this page is either a file in your workspace that you own anyway, like the config and the voice profile, or an edit under `harness/`.
 
 ## Use your company's questions
 
@@ -12,7 +12,7 @@ The built-in formats in [harness/formats/](../harness/formats/) are a starting p
 cp harness/formats/peer.md workspace/formats/peer.md
 ```
 
-**Paste in chat.** Start the review and, when asked, paste the questions. The workflow writes them into `workspace/formats/<type>.md` in the built-in structure and continues.
+**Paste in chat.** When no format file exists for the type, the harness asks you to paste the questions your form uses. You can also paste different questions at the start of any review, or whenever you say the form differs. Either way they are written to `workspace/formats/<type>.md`, with the hints and checklist copied from the closest built-in format, and that file is used from then on.
 
 ## Write in another language
 
@@ -23,7 +23,7 @@ me:
   language: sv
 ```
 
-The questions themselves are separate. Translated formats live under `harness/formats/<lang>/`, so a Swedish peer format would be harness/formats/sv/peer.md. The review workflow reads `workspace/formats/<type>.md` first, so copy the translation there, or paste your form's questions as above. If you translate a format, consider sending it upstream; see [CONTRIBUTING.md](../CONTRIBUTING.md).
+The questions themselves are separate. If your form is in another language, paste its questions when the review starts, or write them into `workspace/formats/<type>.md` yourself. If you translate a built-in format, send it upstream; see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Adjust hints and checklists
 
@@ -42,7 +42,7 @@ A checklist line is one thing to flag:
 
 ## Edit the voice profile by hand
 
-`workspace/voice/profile.md` is a document, not a database. If a draft does not sound like you, fix the profile rather than fixing the same sentence in every review. The most useful edits are verbatim: add a sentence of yours under "Words and phrases they use", add a habit you want gone under "Do not".
+`workspace/voice/profile.md` is yours to edit. If a draft does not sound like you, fix the profile rather than fixing the same sentence in every review. The most useful edits are verbatim: add a sentence of yours under "Words and phrases they use", add a habit you want gone under "Do not".
 
 ```markdown
 ## Do not
@@ -55,7 +55,7 @@ The voice workflow rewrites the profile when you rerun it with new samples, so m
 
 ## Add a source
 
-Sources are recipes in [harness/sources/](../harness/sources/), one file per system: how to detect it, what to query, what to write down, what to be careful with. [harness/sources/README.md](../harness/sources/README.md) describes the structure and how to add one. Once the file exists, add its name to `evidence.sources` in `config.yml` and the evidence workflow will try it in order.
+Sources are recipes in [harness/sources/](../harness/sources/), one file per system: how to detect it, what to query, what to write down, what to be careful with. [harness/sources/README.md](../harness/sources/README.md) describes the structure and how to add one. Once the file exists, add its name to `evidence.sources` in `config.yml`; the evidence workflow tries the sources in that list, in that order, and nothing else.
 
 ```yaml
 evidence:

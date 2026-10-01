@@ -17,7 +17,7 @@ evidence: no               # yes once evidence.md exists and has been read
 
 ## Notes
 
-<One block per question, appended as each answer is confirmed. Write what the owner said in compact form, keep their phrases, note the examples and the follow-up answers. This is the raw material for the draft, so keep it faithful.>
+<One block per question, headed by its number, appended as each answer is confirmed. Write what the owner said in compact form, keep their phrases, note the examples and the follow-up answers. A skipped question gets the single note `skipped`. Anything said off the record is prefixed `off the record:` and stays out of the draft. Replace this placeholder with the first block.>
 
 ## Draft history
 

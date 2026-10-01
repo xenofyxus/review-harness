@@ -38,5 +38,6 @@ reviews:                  # what needs writing this cycle
 
 evidence:
   window_months: 6
-  sources: [github, linear, slack, notes]   # tried in this order, skipped if unavailable
+  sources: [github, linear, slack, notes]   # tried in this order, skipped if unavailable; add gitlab and jira if you use them
   github_orgs: [northwind-labs]
+  gitlab_groups: []

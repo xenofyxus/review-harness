@@ -28,5 +28,5 @@ Upward feedback about your manager. Usually read by them and by their manager. S
 - Each answer has a situation, not just an adjective.
 - Critical feedback names what the owner would have preferred, not only what went wrong.
 - Praise is specific enough that the manager's own manager learns something.
-- Anything the owner said "off the record" during the interview stays out. Ask if unsure.
+- Anything the owner marked off the record during the interview stays out. Ask if unsure.
 - Nothing in the review depends on the manager guessing who else was involved.

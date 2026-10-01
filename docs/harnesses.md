@@ -9,26 +9,34 @@ Every harness reads the same files. `AGENTS.md` is the entrypoint, `harness/` ho
 | Harness | Instructions from | Commands in | Invoke | Status |
 |---|---|---|---|---|
 | Claude Code | `CLAUDE.md`, imports `AGENTS.md` | `.claude/skills/` | `/review peer priya` | Tested |
-| Claude Code plugin | `.claude-plugin/plugin.json` | `.claude/skills/` | `/review-harness:review peer priya` | Generated, untested |
+| Claude Code plugin | `AGENTS.md` in the plugin root, read by each skill | `.claude/skills/`, installed as a plugin | `/review-harness:review peer priya` | Generated, untested |
 | Cursor | `AGENTS.md` | `.agents/skills/` | `/review peer priya` | Generated, untested |
 | Codex CLI | `AGENTS.md` | `.agents/skills/` | `$review peer priya` | Generated, untested |
 | Gemini CLI | `GEMINI.md`, imports `AGENTS.md` | `.gemini/commands/` | `/review peer priya` | Generated, untested |
 | OpenCode | `AGENTS.md` | `.opencode/commands/` | `/review peer priya` | Generated, untested |
 | GitHub Copilot | `AGENTS.md` | `.github/prompts/` | `/review peer priya` | Generated, untested |
-| Windsurf, Devin | the workflow file points at `AGENTS.md` | `.windsurf/workflows/` | `/review peer priya` | Generated, untested |
+| Windsurf, Devin | `AGENTS.md` | `.windsurf/workflows/` | `/review peer priya` | Generated, untested |
 | Roo Code | `AGENTS.md` | `.roo/commands/` | `/review peer priya` | Generated, untested |
 | Kilo Code | `AGENTS.md` | `.kilo/commands/` | `/review peer priya` | Generated, untested |
-| Cline | `AGENTS.md` | `.claude/skills/` | ask for the skill by name | Generated, untested |
-| Aider | `.aider.conf.yml` loads `AGENTS.md` | none | plain English | Generated, untested |
-| Amp, Zed | `AGENTS.md` | none | plain English | Generated, untested |
-| Any chat tool | pasted from `adapters/standalone/` | none | plain English | Generated, untested |
-
+| Cline | `AGENTS.md` | `.claude/skills/` | ask for the `review` skill with `peer priya` | Generated, untested |
+| Aider | `AGENTS.md`, loaded by `.aider.conf.yml` | none | "run the review workflow for peer priya" | Generated, untested |
+| Amp, Zed | `AGENTS.md` | none | "run the review workflow for peer priya" | Generated, untested |
+| Any chat tool | the pasted `adapters/standalone/<format>.md` | none | paste the file, say `start` | Generated, untested |
 
 ## Claude Code
 
-Reads `CLAUDE.md`, one line importing `AGENTS.md`. The five commands are skills in `.claude/skills/<name>/SKILL.md`, each a pointer to one workflow file, with `$ARGUMENTS` carrying what you type after the name. Invoke `/review-setup`, `/review-voice`, `/review-evidence priya`, `/review peer priya`, `/review-status`.
+Reads `CLAUDE.md`, one line importing `AGENTS.md`. The five commands are skills in `.claude/skills/<name>/SKILL.md`, each a pointer to one workflow file, with `$ARGUMENTS` carrying what you type after the name. Invoke `/review-setup`, `/review-voice`, `/review-evidence priya`, `/review peer priya`, `/review-status`. Tested.
 
-As a plugin, install from this repository's marketplace (`.claude-plugin/marketplace.json`) and the commands are namespaced: `/review-harness:review peer priya`. The skills then read `${CLAUDE_PLUGIN_ROOT}/AGENTS.md` first and resolve `harness/` from there; your workspace stays in the folder you run Claude Code in. Template: Tested. Plugin install: Generated, untested.
+## Claude Code plugin
+
+The same skills, installed from this repository's marketplace (`.claude-plugin/marketplace.json`). Inside Claude Code:
+
+    /plugin marketplace add xenofyxus/review-harness
+    /plugin install review-harness@review-harness
+
+From a shell, the same two steps are `claude plugin marketplace add xenofyxus/review-harness` and `claude plugin install review-harness@review-harness`.
+
+Start Claude Code in the folder that will hold your workspace, not in a clone of this repository. The commands are namespaced, so the first one is `/review-harness:review-setup`; it creates `config.yml` there, in `workspace/` under that folder unless you ask for the folder itself, and the other commands find it from there. Each skill reads `AGENTS.md` from the plugin root (`${CLAUDE_PLUGIN_ROOT}`) and resolves `harness/` next to it, so nothing from the plugin is copied into your folder. Generated, untested.
 
 ## Cursor
 
@@ -52,7 +60,7 @@ Reads `AGENTS.md` natively. Commands are prompt files in `.github/prompts/<name>
 
 ## Windsurf and Devin Desktop
 
-Commands are workflows in `.windsurf/workflows/<name>.md`, invoked `/review peer priya`. Each one opens by pointing at `AGENTS.md`. Caveats: workflows run only when you invoke them, they are capped at 12,000 characters (a pointer file is nowhere near), and newer versions prefer `.devin/` while `.windsurf/` still works. Generated, untested.
+Both read a root `AGENTS.md` on their own, so the entrypoint is loaded before any command runs. Commands are workflows in `.windsurf/workflows/<name>.md`, invoked `/review peer priya`; each one also opens with a line to read `AGENTS.md`, which costs nothing when it is already loaded. Caveats: workflows run only when you invoke them, they are capped at 12,000 characters (a pointer file is nowhere near), and newer versions prefer `.devin/` while `.windsurf/` still works. Generated, untested.
 
 ## Roo Code
 
@@ -64,7 +72,7 @@ Reads `AGENTS.md`. Commands are `.kilo/commands/<name>.md` with a `description`.
 
 ## Cline
 
-Reads `AGENTS.md` and picks up skills from `.claude/skills/`. There is no slash form; name the skill in the chat, for example "use the review skill for peer priya". Generated, untested.
+Reads `AGENTS.md` and picks up skills from `.claude/skills/` once skills are switched on in its settings. There is no slash form; ask for the `review` skill with `peer priya`. Generated, untested.
 
 ## Aider
 
@@ -76,8 +84,8 @@ Both read `AGENTS.md` and nothing else. No command files. Say "run review-setup"
 
 ## Any chat tool
 
-For a tool with no file conventions, `adapters/standalone/` holds what to paste: the entrypoint plus a pointer to the workflow you want. Paste it with the workflow file, `harness/principles.md` and the format, then say "run the review workflow for peer priya". It is the fallback, not the recommended path. Generated, untested.
+For a tool with no file access, `adapters/standalone/<format>.md` is one complete paste-in prompt: the preamble, `harness/principles.md`, `harness/workflows/review.md` and that one format. Paste it as the first message of a new chat, or as the system prompt if the tool has one, then say `start`. It asks who the review is about and which language to write in, then interviews you one question at a time. Evidence, voice and status are not available this way; they need file and tool access. To resume, open a new chat, paste the prompt again, then the latest `Progress` block, and the latest draft text if one exists. Generated, untested.
 
 ## Adding a harness
 
-Every command file here is built from `adapters/commands.tsv` by `scripts/build-adapters.sh`. Add a template for the new tool's file format under `adapters/`, add a case to the script, run it. Keep the adapter thin: a pointer to the workflow file and nothing else. Details in `adapters/README.md`.
+Every command file here is built from `adapters/commands.tsv` by `scripts/build-adapters.sh`. There are no template files under `adapters/`; each tool's file format is a `write_<tool>` function in the script. Add one, call it where the other writers are called, add a cleanup line for its directory, run the script twice, and add a row to the matrix above. Keep the adapter thin: a pointer to the workflow file and nothing else. Details in `adapters/README.md`.

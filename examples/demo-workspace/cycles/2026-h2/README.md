@@ -4,4 +4,4 @@ Folders here are one per review. Each has `progress.md` (interview state), `evid
 
 Run the status workflow to see where everything stands.
 
-In this demo only `priya/` is worked through end to end. The self review and the manager review for Tomas are in `config.yml` but have not been started.
+In this demo only `priya/` is worked through end to end. The self review and the manager review for Tomas have a `progress.md` each but have not been started.

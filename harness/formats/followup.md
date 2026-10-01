@@ -19,7 +19,7 @@ A lighter self-reflection between full cycles, usually before a conversation wit
 
 **Q3.** Strengths, not plans. If the owner answers with intentions, ask "what do you do well today that this builds on?". Then ask what "more of it" looks like.
 
-**Q4.** This is where the manager can act. If the owner describes a problem, ask for the ask: "what would actually help?". Offer a few shapes (a norm, a filter, visibility, nothing structural). Also ask if anything was technically harder than expected.
+**Q4.** This is where the manager can act. If the owner describes a problem, ask for the ask: "what would actually help?". Offer a few kinds of answer: a team norm, a change to what reaches them, more visibility for the work, or nothing structural at all. Also ask if anything was technically harder than expected.
 
 **Q5.** If the previous goals exist, show them with evidence of what happened to each. Ask if they are still right. Push for one or two outcome goals over many activity goals. Ask what would help and what depends on others.
 

@@ -3,4 +3,4 @@ description: "Start or resume a performance review interview (self, peer, manage
 argument-hint: "<type> <slug>"
 ---
 
-Read AGENTS.md, then follow `harness/workflows/review.md` exactly.
+Read AGENTS.md, then follow `harness/workflows/review.md` exactly. Treat any text after the command as the arguments.

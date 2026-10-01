@@ -8,7 +8,7 @@ This file holds the method and the writing rules. Every workflow assumes you hav
 
 **One question at a time.** Present the question from the format file. Wait for the answer. Ask one or two follow-ups that go after what is missing: a concrete example, the impact, who was affected, what changed afterwards, what the owner actually felt. Then summarise what you captured in three to five sentences and ask whether it is right. Only then move on. Save notes to `progress.md` after each confirmed answer so a session can be resumed a week later.
 
-**Evidence makes better questions.** If `evidence.md` exists for this review, use it to make the questions concrete: "The carrier migration and the webhook rework both look like candidates, which one is it for you?" beats "What are you proud of?". Evidence is a prompt, not an answer. If the owner does not mention something, it does not go in the review, except as a clearly marked suggestion in the draft notes.
+**Evidence makes better questions.** If `evidence.md` exists for this review, use it to make the questions concrete: "The carrier migration and the webhook rework both look like candidates, which one is it for you?" beats "What are you proud of?". Evidence is a prompt, not an answer. If the owner does not mention or accept something, it does not go in the review, except as a one-line suggestion in the flags under the draft.
 
 **Follow-ups that work.** Ask for the situation, not the trait. "When did that show up?" "What did you do?" "What happened because of it?" "What would have happened if they had not been there?" "Is there a moment where the opposite was true?" The last one is what keeps praise credible and criticism fair.
 
@@ -31,12 +31,12 @@ These apply to every review, in every language, regardless of the voice profile.
 - No em dashes. Never the em dash character (U+2014). Use commas, periods, or restructure the sentence.
 - No AI vocabulary. Never: leverage, foster, delve, navigate, landscape, underscore, moreover, furthermore, "in terms of", "it's worth noting", "I'd be remiss", robust, seamless, synergy, holistic, empower, journey, testament, "game-changer", "at the end of the day", "circle back", "double down", "unpack".
 - No corporate fluff. No "great team player", "invaluable asset", "goes above and beyond", "rockstar" without a concrete example right next to it, and even then prefer the example alone.
-- No headers, bold labels or lists inside the final review text. The questions are the structure.
+- No headers, labels or lists inside an answer. The title line and the bold question lines are the only structure.
 - No invented content. Not one example, number, name or feeling that the owner did not give you or that the evidence file does not contain with a link.
 
 **Length.** A typical answer is one to three paragraphs. A six-question self review lands around 1,200 to 1,800 words. A four-question peer review around 600 to 1,000. Shorter is fine when the owner has less to say. Padding is never fine.
 
-## Draft review checklist
+## Reviewing the draft
 
 Before presenting a draft, read it as the person who will receive it, then as the owner, then as a sceptical HR reader. Flag, in a short list under the draft:
 
@@ -48,8 +48,8 @@ Before presenting a draft, read it as the person who will receive it, then as th
 - **Not theirs.** Anything you added from evidence or inference rather than from the owner's words. Name each one so it can be cut.
 - **Voice slips.** Places that read like an AI wrote them.
 
-Then run the mechanical checks: search the draft for the em dash character (U+2014) and for every word on the vocabulary list. Report the result in one line.
+Then run the mechanical checks: search the draft for the em dash character (U+2014), for every word on the vocabulary list, and for lists or headers inside answers. Report the result in one line.
 
 ## Marking final
 
-Only the owner marks a review final. When they do: remove any "draft" marker from `review.md`, set `status: final` in `progress.md`, and tell them where the file is. Do not push, publish or send anything unless asked.
+Only the owner marks a review final. The review workflow says what to do when they do. Never push, publish or send anything unless asked.

@@ -1,7 +1,7 @@
 {
   "name": "review-harness",
   "displayName": "Review Harness",
-  "description": "Interview-driven performance reviews that sound like you. Self, peer, manager and report reviews with evidence from GitHub, Linear and Slack.",
+  "description": "Interview-driven performance reviews that sound like you. Self, peer, manager, report and follow-up reviews with evidence from GitHub, GitLab, Linear, Jira and Slack.",
   "version": "0.1.0",
   "author": { "name": "Anton Anderzén", "url": "https://github.com/xenofyxus" },
   "homepage": "https://github.com/xenofyxus/review-harness",

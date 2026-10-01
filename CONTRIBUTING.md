@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for looking. The harness is plain markdown, so most contributions are edits to text.
+Thanks for looking. Review Harness is plain markdown, so most contributions are edits to text.
 
 ## What is welcome
 
@@ -8,7 +8,7 @@ Thanks for looking. The harness is plain markdown, so most contributions are edi
 - **New sources** in `harness/sources/`. Detection, queries, what to write down, what to be careful about.
 - **New adapters** for harnesses that read `AGENTS.md` or have a command-file convention. Keep them thin: a pointer to the workflow file, nothing else.
 - **Fixes to workflows** where the instructions produced a bad result in practice. Say what happened.
-- **Translations** of the formats. Put them in `harness/formats/<lang>/`.
+- **Translations** of the formats. Put a translated format in `workspace/formats/<type>.md` for your own use; if you send it upstream, open a pull request and we will decide where it lives.
 
 ## Rules
 

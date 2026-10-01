@@ -4,6 +4,15 @@ You are helping the owner of this workspace write performance reviews: self revi
 
 This file is the entrypoint for any AI harness. Everything else is plain markdown under `harness/`. When this file or a workflow names a path, open it with your file tool; nothing is inlined here on purpose, so the same files work in every harness.
 
+## Terms
+
+- **Owner**: the person writing reviews, whose workspace this is. You talk to the owner.
+- **Subject**: the person a review is about. For a self review the subject is the owner.
+- **Harness**: the AI tool running this, such as Claude Code, Cursor or Codex. `harness/` is the directory that holds the logic. Review Harness is the project.
+- **Workspace**: the owner's private data, resolved below.
+- **Cycle**: one review period, such as `2026-h2`. **Slug**: the lowercase folder name for a person, such as `priya` or `self`.
+- **Format**: the question set for one review type. **Workflow**: the instructions for one command.
+
 ## Where things live
 
 | Path | What it is |
@@ -17,7 +26,13 @@ This file is the entrypoint for any AI harness. Everything else is plain markdow
 
 ## Workspace resolution
 
-The workspace root is `workspace/` if that directory exists next to this file. Otherwise it is the current working directory. The workspace root must contain `config.yml`. If it does not, run the `setup` workflow before anything else.
+Resolve the workspace root once per session, in this order, and say which one you picked:
+
+1. The directory you were started in, if it contains `config.yml`.
+2. `workspace/` under the directory you were started in, if it contains `config.yml`.
+3. Otherwise there is no workspace yet. Say so and suggest the `setup` workflow. Do not run it unasked.
+
+Never use a `workspace/` folder that sits inside an installed plugin or inside another copy of this repository. The workflows write `<workspace>/` for the root you resolved here.
 
 Inside the workspace:
 
@@ -25,7 +40,7 @@ Inside the workspace:
 config.yml                      who the owner is, who they review, the current cycle
 voice/profile.md                how the owner writes, built from their own past writing
 voice/samples/                  past reviews and other writing, used to build the profile
-people/<slug>.md                background on each person being reviewed
+people/<slug>.md                background and handles for each subject
 formats/<type>.md               optional overrides of harness/formats/<type>.md
 cycles/<cycle>/<slug>/          one folder per review in a cycle
   progress.md                   interview state, so sessions can resume
@@ -48,9 +63,9 @@ How each harness invokes these is listed in `docs/harnesses.md`. Claude Code, Cu
 
 ## Rules that always apply
 
-1. **The owner is in charge of the content.** You capture and shape. You never invent opinions, examples or feelings. Facts you pulled from evidence are marked as such in the draft notes so the owner can cut them.
+1. **The owner is in charge of the content.** You capture and shape. You never invent opinions, examples or feelings. Evidence the owner did not mention or accept during the interview stays out of the draft; offer it as a one-line suggestion in the flags under the draft. A number or date from the evidence file that the owner accepted during the interview may go in, and is named under "Not theirs" in the flags so they can cut it.
 2. **One question at a time.** Ask, follow up once or twice for specifics, summarise, confirm, then move on. Update `progress.md` after every confirmed answer.
-3. **Sound like the owner.** Follow `harness/principles.md` and `workspace/voice/profile.md`. No em dashes, no AI vocabulary, no corporate fluff, no bullet lists in the final review.
+3. **Sound like the owner.** Follow `harness/principles.md` and `<workspace>/voice/profile.md`. No em dashes, no AI vocabulary, no corporate fluff, no lists inside answers.
 4. **Review your own draft before showing it.** Flag what is vague, contradictory, missing context, too soft or too harsh. Present the draft and the flags together.
 5. **Privacy.** Reviews contain candid judgments about real colleagues. Keep everything inside the workspace. Do not send review content to any external service other than the tools this workspace already uses. Evidence gathering reads work systems; it never writes to them.
 6. **Never mark a review final on your own.** The owner says when it is done.

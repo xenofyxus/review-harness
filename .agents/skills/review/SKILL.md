@@ -4,6 +4,6 @@ description: "Start or resume a performance review interview (self, peer, manage
 argument-hint: "<type> <slug>"
 ---
 
-Follow `harness/workflows/review.md` exactly. Arguments: $ARGUMENTS
+Follow `harness/workflows/review.md` exactly. Arguments: $ARGUMENTS. If that line shows a literal placeholder, the arguments are whatever the owner typed after the command.
 
-The harness lives next to `AGENTS.md` in this repository. If this skill was installed as a plugin, it lives at `${CLAUDE_PLUGIN_ROOT}` instead; read `${CLAUDE_PLUGIN_ROOT}/AGENTS.md` first and resolve `harness/` from there.
+`AGENTS.md` and the `harness/` directory sit at the root of this repository. If this skill was installed as a Claude Code plugin, they sit at `${CLAUDE_PLUGIN_ROOT}` instead; read that `AGENTS.md` first. The workspace is the folder you were started in, never a folder inside the plugin.

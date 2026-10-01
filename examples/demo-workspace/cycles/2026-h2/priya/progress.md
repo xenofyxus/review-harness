@@ -27,5 +27,5 @@ evidence: yes              # yes once evidence.md exists and has been read
 
 ## Draft history
 
-2026-09-24, draft 1: full draft after the interview, about 760 words, six flags raised, Maya kept both evidence numbers (18 tickets, 61 reviews) and dropped the "too soft" flag on Q2 by rewriting the opening sentence herself.
+2026-09-24, draft 1: full draft after the interview, about 760 words, seven flags raised, Maya kept both evidence numbers (18 tickets, 61 reviews), kept the three-paragraph answers, and dropped the "too soft" flag on Q2 by rewriting the opening sentence herself.
 2026-09-25, draft 2: Q2 opening replaced with Maya's wording ("When a problem is hard, you tend to disappear into it. I do the same, so I recognise it."), no other changes, marked final.

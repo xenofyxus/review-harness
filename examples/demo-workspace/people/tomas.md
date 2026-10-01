@@ -3,7 +3,8 @@
 **Slug:** tomas
 **Relation to me:** manager
 **Role:** Backend Team Lead
-**Worked together since:** September 2024
+**Worked together since:** September 2025
+**Handles:** github: tberg | gitlab: | slack: U0TOMAS34 | linear: | jira:
 
 ## Background
 
@@ -15,4 +16,4 @@ This is my first manager review of him. He gave me my last review in March; the 
 
 ## Things I want to remember
 
-Handles for evidence: GitHub `tomasberg`, Slack `U01T4BRG8M`, Linear `Tomas Berg`. The 4 June standup where he asked who owned the postmortem action items, which was the right question three weeks late. The roadmap cut in August that saved us a quarter of work and that nobody outside the team heard the reasoning for.
+The 4 June standup where he asked who owned the postmortem action items, which was the right question three weeks late. The roadmap cut in August that saved us a quarter of work and that nobody outside the team heard the reasoning for.

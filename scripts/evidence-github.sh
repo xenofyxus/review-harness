@@ -121,15 +121,21 @@ open_n=$(count_lines "$tmp/open")
 log "  $open_n open"
 
 log "Searching PRs reviewed for others (limit $limit)"
+# The first output line carries the raw result count, so the limit warning can
+# see it; the grouped lines after it leave out the subject's own PRs.
 gh search prs --reviewed-by="$login" "${owner_args[@]}" --updated=">=$since" --limit "$limit" \
   --json author \
-  --jq '[.[] | select((.author.login | ascii_downcase) != "'"$login_lc"'") | .author.login]
-        | group_by(.) | map({a: .[0], n: length}) | sort_by(-.n) | .[] | "\(.n) \(.a)"' \
-  > "$tmp/reviews" \
+  --jq '"found \(length)", ([.[] | select((.author.login | ascii_downcase) != "'"$login_lc"'") | .author.login]
+        | group_by(.) | map({a: .[0], n: length}) | sort_by(-.n) | .[] | "\(.n) \(.a)")' \
+  > "$tmp/reviews-raw" \
   || die "search for reviewed PRs failed, see the message above"
+found_n=$(awk 'NR == 1 && $1 == "found" { print $2 + 0 }' "$tmp/reviews-raw")
+[ -n "$found_n" ] || die "search for reviewed PRs returned no count line, see the message above"
+awk 'NR > 1' "$tmp/reviews-raw" > "$tmp/reviews"
 reviews_n=$(awk '{ s += $1 } END { print s + 0 }' "$tmp/reviews")
 authors_n=$(count_lines "$tmp/reviews")
 log "  $reviews_n PRs reviewed for $authors_n people"
+[ "$found_n" -lt "$limit" ] || log "  warning: hit the limit of $limit, raise -l to see everything"
 
 sized_n=0
 if [ -n "$size_repo" ]; then

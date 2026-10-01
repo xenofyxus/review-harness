@@ -1,8 +1,8 @@
 # Privacy
 
-Reviews contain candid judgments about real colleagues, and this harness reads your work systems to prepare for them. This page says what it touches, where it goes, and what stays with you.
+Reviews contain candid judgments about real colleagues, and the evidence workflow reads your work systems to prepare for them. This page says what the workflows touch, where it goes, and what stays with you.
 
-## What the harness touches
+## What the workflows touch
 
 | Data | Where it lives | Who wrote it |
 |---|---|---|
@@ -12,13 +12,13 @@ Reviews contain candid judgments about real colleagues, and this harness reads y
 | Your interview answers, in compact form | `progress.md` | The review workflow |
 | The review itself | `review.md` | The review workflow, from your words |
 
-All of it is plain text on your disk. No workflow uploads anything, and none sends review content to a service the workspace does not already use.
+All of it is plain text on your disk. No workflow uploads anything itself. What your AI harness sends to its model is a separate matter, covered at the end of this page.
 
 ## Evidence gathering only reads
 
 The evidence workflow queries GitHub, GitLab, Linear, Jira and Slack for what the subject did in the window. It never writes: no comments, no reactions, no messages, no issue updates. The recipes in [harness/sources/](../harness/sources/) are search and read calls only, and [evidence.md](../harness/workflows/evidence.md) says so near the top.
 
-One thing to know about Slack. A user token, or a Slack MCP connector acting as you, searches everything you can see, including your own direct messages and the private channels you are in. The recipes filter by the subject's member ID, so results are their messages in places you already are, but the search has that reach. If that is not acceptable, leave `slack` out of `evidence.sources` in `config.yml`.
+There is one thing to know about Slack. A user token, or a Slack MCP connector acting as you, searches everything you can see, including your own direct messages and the private channels you are in. The recipes filter by the subject's member ID, so results are their messages in places you already are, but the search has that reach. If that is not acceptable, leave `slack` out of `evidence.sources` in `config.yml`.
 
 ## Private repo or gitignore
 
@@ -30,7 +30,7 @@ If you would rather keep the workspace out of git entirely, uncomment the two `w
 
 For a self review, search freely. It is your work.
 
-For a review of someone else, stay with what you could see anyway: their pull requests, their tickets, messages in channels you are a member of, and your own conversations with them. Own the conversations you are in. Do not go looking for private channels you are not part of, and do not include anything a third person said about the subject in a private message, even one sent to you. When in doubt, leave it out. The workflow lists what it skipped under `## Not found` in the evidence file.
+For a review of someone else, stay with what you could see anyway: their pull requests, their tickets, messages in channels you are a member of, and your own conversations with them. Do not go looking for private channels you are not part of, and do not include anything a third person said about the subject in a private message, even one sent to you. When in doubt, leave it out. The workflow lists what it skipped under `## Not found` in the evidence file.
 
 ## Your AI harness sees everything
 

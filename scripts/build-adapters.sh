@@ -15,8 +15,8 @@
 # any file in them that belongs to a command or format no longer listed, so do
 # not keep hand-written files in these directories:
 #
-#   .agents/skills/<name>/SKILL.md      Cursor, Codex CLI, Cline
-#   .claude/skills/<name>/SKILL.md      Claude Code, Claude Code plugin, Cursor (legacy)
+#   .agents/skills/<name>/SKILL.md      Cursor, Codex CLI
+#   .claude/skills/<name>/SKILL.md      Claude Code, Claude Code plugin, Cline, Cursor (legacy)
 #   .opencode/commands/<name>.md        OpenCode
 #   .gemini/commands/<name>.toml        Gemini CLI
 #   .github/prompts/<name>.prompt.md    GitHub Copilot
@@ -71,6 +71,17 @@ expected_header=$(printf 'name\tworkflow\targument_hint\tdescription')
 
 NAMES=(); WORKFLOWS=(); HINTS=(); DESCS=()
 n=0
+
+# Every row must have exactly the four columns of the header. A missing tab
+# would otherwise shift the description into the hint, and an extra one would
+# be dropped in silence.
+bad_rows=$(awk 'BEGIN { FS = "\t" }
+  { sub(/\r$/, "") }
+  NR == 1 || /^[[:space:]]*$/ || /^#/ { next }
+  NF != 4 { printf "  line %d has %d column%s: %s\n", NR, NF, (NF == 1 ? "" : "s"), $0 }' "$TSV")
+[ -z "$bad_rows" ] || fail "$TSV: every command row needs exactly four tab separated columns (name, workflow, argument_hint, description; leave argument_hint empty between two tabs when there is none)
+$bad_rows"
+
 # bash collapses runs of tabs when it splits a line, which would swallow an
 # empty argument_hint. awk swaps each tab for the ASCII unit separator (037),
 # which bash splits on exactly. awk also drops the header, blank lines,
@@ -126,10 +137,12 @@ known_format() {
 
 written=0
 
-# Skills: .agents/skills (Cursor, Codex, Cline) and .claude/skills (Claude Code).
-# Same bytes in both places. $ARGUMENTS is substituted by Claude Code; other
-# tools pass the arguments as free text after the command, and the workflows
-# accept that.
+# Skills: .agents/skills (Cursor, Codex) and .claude/skills (Claude Code, the
+# Claude Code plugin, Cline). Same bytes in both places. Claude Code substitutes
+# $ARGUMENTS and resolves ${CLAUDE_PLUGIN_ROOT}; the other harnesses show both
+# as written, so the body says what they mean. None of these skills says "read
+# AGENTS.md" because every harness that reads a skills directory loads
+# AGENTS.md on its own.
 write_skill() {  # <dir> <name> <workflow> <hint> <desc>
   local out="$1/$2/SKILL.md"
   mkdir -p "$1/$2"
@@ -139,11 +152,11 @@ write_skill() {  # <dir> <name> <workflow> <hint> <desc>
     if manual_only "$2"; then emit 'disable-model-invocation: true'; fi
     emit '---' ''
     if [ -n "$4" ]; then
-      emit "Follow \`$3\` exactly. Arguments: \$ARGUMENTS"
+      emit "Follow \`$3\` exactly. Arguments: \$ARGUMENTS. If that line shows a literal placeholder, the arguments are whatever the owner typed after the command."
     else
       emit "Follow \`$3\` exactly."
     fi
-    emit '' 'The harness lives next to `AGENTS.md` in this repository. If this skill was installed as a plugin, it lives at `${CLAUDE_PLUGIN_ROOT}` instead; read `${CLAUDE_PLUGIN_ROOT}/AGENTS.md` first and resolve `harness/` from there.'
+    emit '' '`AGENTS.md` and the `harness/` directory sit at the root of this repository. If this skill was installed as a Claude Code plugin, they sit at `${CLAUDE_PLUGIN_ROOT}` instead; read that `AGENTS.md` first. The workspace is the folder you were started in, never a folder inside the plugin.'
   } > "$out"
   written=$((written + 1))
 }
@@ -202,24 +215,29 @@ write_windsurf() {
 
 # Roo Code: .roo/commands/<name>.md, invoked as /name, arguments as free text.
 write_roo() {
-  local out=".roo/commands/$1.md"
+  local out=".roo/commands/$1.md" args=""
+  if [ -n "$3" ]; then args=" Treat any text after the command as the arguments."; fi
   mkdir -p .roo/commands
   {
     emit '---' "description: \"$4\""
     if [ -n "$3" ]; then emit "argument-hint: \"$3\""; fi
     emit '---' ''
-    emit "Read AGENTS.md, then follow \`$2\` exactly."
+    emit "Read AGENTS.md, then follow \`$2\` exactly.$args"
   } > "$out"
   written=$((written + 1))
 }
 
-# Kilo Code: .kilo/commands/<name>.md, invoked as /name, arguments as free text.
+# Kilo Code: .kilo/commands/<name>.md, same shape as Roo: invoked as /name,
+# argument-hint in the frontmatter, arguments as free text.
 write_kilo() {
-  local out=".kilo/commands/$1.md"
+  local out=".kilo/commands/$1.md" args=""
+  if [ -n "$3" ]; then args=" Treat any text after the command as the arguments."; fi
   mkdir -p .kilo/commands
   {
-    emit '---' "description: \"$4\"" '---' ''
-    emit "Read AGENTS.md, then follow \`$2\` exactly."
+    emit '---' "description: \"$4\""
+    if [ -n "$3" ]; then emit "argument-hint: \"$3\""; fi
+    emit '---' ''
+    emit "Read AGENTS.md, then follow \`$2\` exactly.$args"
   } > "$out"
   written=$((written + 1))
 }
@@ -260,7 +278,8 @@ write_standalone_readme() {
     emit '3. Say `start`. The assistant asks who the review is about and which language to write in, then interviews you one question at a time.'
     emit '4. If you have a voice profile (`workspace/voice/profile.md`), paste it right after `start`. Without one, the assistant follows the general writing rules only.'
     emit '' '## Resume' ''
-    emit 'Every reply that confirms an answer ends with a `Progress` block. To continue later, open a new chat, paste the prompt again, then paste the latest `Progress` block. The assistant picks up from the first unanswered question.'
+    emit 'Every reply that confirms an answer ends with a `Progress` block. To continue later, open a new chat, paste the prompt again, then paste the latest `Progress` block. The assistant picks up from the first unanswered question.' ''
+    emit 'Once a draft exists, the `Progress` block also names the current draft number. To resume during drafting or iteration, paste the `Progress` block and the latest draft text together. The assistant continues iterating on that draft; it will ask for the draft if the block says one exists and none was pasted, and it never rebuilds a draft from the notes alone.'
     emit '' '## Regenerate' ''
     emit 'These files are written by `scripts/build-adapters.sh` from `PREAMBLE.md` and the harness files. Edit those and run the script. Changes made directly to a generated file are lost on the next run.'
   } > "$out"

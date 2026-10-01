@@ -1,6 +1,6 @@
 # Scripts
 
-Four small bash scripts. None of them is required; every one of them has an AI-driven equivalent in `harness/workflows/`. They exist for people who want a plain shell path, and for CI.
+Four small bash scripts. None of them is required. `setup.sh` and `evidence-github.sh` have AI-driven equivalents in `harness/workflows/` and exist for people who want a plain shell path; `build-adapters.sh` and `check.sh` are for contributors and CI.
 
 | Script | What it does |
 |---|---|
@@ -9,7 +9,7 @@ Four small bash scripts. None of them is required; every one of them has an AI-d
 | `build-adapters.sh` | Regenerates every harness adapter and the standalone prompts from `adapters/commands.tsv` and `harness/`. |
 | `check.sh` | Lints the repo: em dashes, vocabulary, broken paths, adapter freshness, identical skills, script syntax, orphan templates, example formatting. |
 
-All four run on macOS bash 3.2 and Linux with coreutils, sed, awk and grep. `evidence-github.sh` also needs the `gh` CLI, authenticated.
+All four run on macOS bash 3.2 and Linux with coreutils, sed, awk and grep. `evidence-github.sh` also needs the `gh` CLI, authenticated. On Windows, run them from Git Bash or WSL; line endings are pinned to LF by `.gitattributes`.
 
 ## setup.sh
 
@@ -40,7 +40,7 @@ Progress goes to stderr, markdown to stdout. The recipes it runs are the ones in
 scripts/build-adapters.sh
 ```
 
-Rewrites `.agents/skills/`, `.claude/skills/`, `.opencode/commands/`, `.gemini/commands/`, `.github/prompts/`, `.windsurf/workflows/`, `.roo/commands/`, `.kilo/commands/` and `adapters/standalone/`. Run it after changing `adapters/commands.tsv`, `harness/principles.md`, `harness/workflows/review.md` or a format, then commit the result. Stale files for removed commands are deleted.
+Rewrites `.agents/skills/`, `.claude/skills/`, `.opencode/commands/`, `.gemini/commands/`, `.github/prompts/`, `.windsurf/workflows/`, `.roo/commands/`, `.kilo/commands/` and `adapters/standalone/`. Run it after changing `adapters/commands.tsv`, `adapters/standalone/PREAMBLE.md`, `harness/principles.md`, `harness/workflows/review.md` or a format, then commit the result. Stale files for removed commands are deleted.
 
 ## check.sh
 

@@ -3,4 +3,4 @@ description: "Gather evidence of a person's work from GitHub, GitLab, Linear, Ji
 argument-hint: "<slug>"
 ---
 
-Read AGENTS.md, then follow `harness/workflows/evidence.md` exactly.
+Read AGENTS.md, then follow `harness/workflows/evidence.md` exactly. Treat any text after the command as the arguments.

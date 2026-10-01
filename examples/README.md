@@ -9,15 +9,16 @@ A filled-in workspace and a transcript, so you can see what the harness produces
 | Path | What it shows |
 |---|---|
 | `demo-workspace/config.yml` | A complete config: owner, two people, three reviews, evidence settings with handles filled in. |
-| `demo-workspace/people/` | Person files for a peer (`priya.md`) and a manager (`tomas.md`), including the "things I want to remember" notes the evidence workflow reads. |
-| `demo-workspace/voice/samples/` | One past review the owner wrote, the raw material for the voice profile. |
+| `demo-workspace/people/` | Person files for a peer (`priya.md`) and a manager (`tomas.md`): the **Handles** line the evidence workflow reads, and the "things I want to remember" notes it reads as well. |
+| `demo-workspace/voice/samples/` | One past review the owner wrote, the raw material for the voice profile, and the README the setup workflow leaves there. |
 | `demo-workspace/voice/profile.md` | The voice profile the voice workflow built from that sample, quoting it. |
 | `demo-workspace/cycles/2026-h2/priya/evidence.md` | What the evidence workflow found for Priya across GitHub, Linear and Slack: volume, themes, moments, prompts per question, gaps. |
 | `demo-workspace/cycles/2026-h2/priya/progress.md` | Interview state after the review was marked final: ticked questions, faithful notes per answer, draft history. |
 | `demo-workspace/cycles/2026-h2/priya/review.md` | The final peer review, in Maya's voice. |
-| `transcript.md` | A condensed transcript of the interview that produced it. |
+| `demo-workspace/cycles/2026-h2/self/progress.md` and `tomas/progress.md` | Progress files as the setup workflow creates them: the questions shortened to their first clause, `status: not started`, no notes yet. |
+| `transcript.md` | A condensed transcript of the interview that produced the Priya review. |
 
-Only the peer review for Priya is worked through. The self review and the manager review for Tomas are listed in `config.yml` and not started, which is what a real workspace looks like mid-cycle.
+Only the peer review for Priya is worked through. The self review and the manager review for Tomas each have a `progress.md` with `status: not started` and nothing else, which is what a real workspace looks like mid-cycle.
 
 ## How to read it
 
@@ -37,4 +38,4 @@ Also notice what the harness does not do. It does not offer an opinion of Priya.
 
 ## Trying it yourself
 
-Copy `demo-workspace/` over `workspace/` in a scratch checkout, then ask your harness to run the status workflow. You should see one final review and two not started. Run `review manager tomas` to interview yourself as Maya and see how a session starts from a blank progress file.
+Copy `demo-workspace/` over `workspace/` in a scratch checkout, then ask your harness to run the status workflow. You should see one final review and two not started. Run `review manager tomas` to interview yourself as Maya and see how a session starts from a progress file that has no answers in it yet.

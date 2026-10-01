@@ -17,6 +17,7 @@
 #   RH_COMPANY   your company
 #   RH_LANG      language for reviews, default en
 #   RH_CYCLE     cycle name, default from today's date, e.g. 2026-h2
+#                (a-z, 0-9, dots, underscores and dashes; cannot start with a dot)
 #   RH_PEOPLE    "Name|relation|role;Name|relation|role[|format]"
 #                relation is manager, peer or report; format defaults to the relation
 #   RH_SELF      y or n, self review this cycle, default y
@@ -24,6 +25,9 @@
 # With an existing workspace/config.yml the script only adds: a new cycle
 # (RH_CYCLE, or the menu) or new people (RH_PEOPLE, or the menu). Existing files
 # are never overwritten.
+#
+# Interactive mode stops with an error when stdin runs out, so a run without a
+# terminal needs -y.
 #
 # Portable: bash 3.2 or newer, coreutils, sed. git and gh are used for the
 # privacy check only if they happen to be installed.
@@ -84,17 +88,33 @@ lower() { printf '%s' "$1" | LC_ALL=C tr '[:upper:]' '[:lower:]'; }
 # Escape a value for the replacement side of sed s~...~...~
 sed_esc() { printf '%s\n' "$1" | sed -e 's/[\\&~]/\\&/g'; }
 
-# Print a YAML scalar, quoted only when a bare value would be misread.
+# True when a bare YAML scalar would be read as a number: integers, floats,
+# exponents, hex, octal, and the YAML 1.1 spellings with underscores.
+yaml_numeric() {
+  local re
+  case "$1" in *[0-9]*) ;; *) return 1 ;; esac
+  re='^[-+]?([0-9_]+|[0-9_]*\.[0-9_]*)([eE][-+]?[0-9]+)?$'
+  [[ $1 =~ $re ]] && return 0
+  re='^[-+]?0[xX][0-9a-fA-F_]+$'
+  [[ $1 =~ $re ]] && return 0
+  re='^[-+]?0[oO]?[0-7_]+$'
+  [[ $1 =~ $re ]] && return 0
+  return 1
+}
+
+# Print a YAML scalar, quoted only when a bare value would be misread: empty,
+# special characters, leading or trailing blanks, a YAML 1.1 boolean or null
+# (yes, no, on, off, y, n, true, false, ~) or anything that looks like a number.
 yaml_str() {
   local v=$1 specials=':#[]{},&*!|>%@"'"'"'`'
   if [ -z "$v" ] || [[ $v == *["$specials"]* ]] || [[ $v == ' '* ]] || [[ $v == *' ' ]] \
-     || [[ $v == -* ]] || [[ $v == \?* ]]; then
+     || [[ $v == -* ]] || [[ $v == \?* ]] || yaml_numeric "$v"; then
     v=${v//\\/\\\\}
     v=${v//\"/\\\"}
     printf '"%s"' "$v"
   else
     case "$(lower "$v")" in
-      true|false|yes|no|null|'~') printf '"%s"' "$v" ;;
+      true|false|yes|no|on|off|y|n|null|'~'|.inf|+.inf|.nan) printf '"%s"' "$v" ;;
       *) printf '%s' "$v" ;;
     esac
   fi
@@ -116,6 +136,18 @@ kv() {
 
 YES=0
 
+# read_answer VAR: one line from stdin into VAR. Running out of input is fatal,
+# so a closed stdin cannot loop a required question forever. A last line with
+# no newline still counts.
+read_answer() {
+  local __line=''
+  if ! IFS= read -r __line && [ -z "$__line" ]; then
+    printf '\n' >&2
+    die "no more input on stdin. For a run without a terminal use -y and set RH_NAME, RH_PEOPLE and friends (see -h)."
+  fi
+  printf -v "$1" '%s' "$__line"
+}
+
 # ask VAR "prompt" "default"   (default is used silently with -y)
 ask() {
   local __var=$1 __prompt=$2 __default=${3-} __answer
@@ -127,10 +159,11 @@ ask() {
     else
       printf '%s: ' "$__prompt"
     fi
-    IFS= read -r __answer || __answer=""
+    read_answer __answer
     __answer=$(trim "$__answer")
     [ -n "$__answer" ] || __answer=$__default
   fi
+  __answer=$(trim "$__answer")
   printf -v "$__var" '%s' "$__answer"
 }
 
@@ -145,14 +178,16 @@ ask_required() {
   done
 }
 
-# ask_yn "prompt" default(y|n)   -> exit status 0 for yes
+# ask_yn "prompt" default   -> exit status 0 for yes. The default is any
+# spelling of yes or no (y, yes, n, no, ...); anything else counts as no.
 ask_yn() {
-  local prompt=$1 def=$2 ans
+  local prompt=$1 def ans
+  case "$(lower "$(trim "$2")")" in y|yes|true|on|1) def=y ;; *) def=n ;; esac
   if [ "$YES" = 1 ]; then
     ans=$def
   else
     if [ "$def" = y ]; then printf '%s [Y/n]: ' "$prompt"; else printf '%s [y/N]: ' "$prompt"; fi
-    IFS= read -r ans || ans=""
+    read_answer ans
     ans=$(trim "$ans")
     [ -n "$ans" ] || ans=$def
   fi
@@ -214,9 +249,38 @@ make_slug() {
   MADE_SLUG=$candidate
 }
 
-# Cycle names are folder names: lowercase, a-z 0-9 . _ -
+# Cycle names are folder names under cycles/: lowercase, a-z 0-9 . _ - and
+# never starting with a dot, so "." and ".." cannot escape the folder.
 slugify_cycle() {
-  printf '%s' "$(trim "$1")" | LC_ALL=C tr '[:upper:]' '[:lower:]' | LC_ALL=C tr ' ' '-' | LC_ALL=C tr -cd 'a-z0-9._-'
+  local s
+  s=$(printf '%s' "$(trim "$1")" | LC_ALL=C tr '[:upper:]' '[:lower:]' | LC_ALL=C tr ' ' '-' | LC_ALL=C tr -cd 'a-z0-9._-')
+  s=${s#"${s%%[!.]*}"}
+  printf '%s' "$s"
+}
+
+# True for a cleaned cycle name that is safe to use as a folder.
+valid_cycle() {
+  [ -n "$1" ] || return 1
+  case "$1" in .*) return 1 ;; esac
+  return 0
+}
+
+CYCLE_RULE="a cycle name uses a-z, 0-9, dots, underscores and dashes, and cannot start with a dot"
+
+# ask_cycle VAR "default": asks for a cycle name, cleans it, and insists on a
+# usable one. Loops interactively; dies with -y.
+ask_cycle() {
+  local __var=$1 __default=$2 __raw __clean
+  while :; do
+    ask __raw "Cycle name" "$__default"
+    __clean=$(slugify_cycle "$__raw")
+    if valid_cycle "$__clean"; then
+      printf -v "$__var" '%s' "$__clean"
+      return 0
+    fi
+    [ "$YES" = 1 ] && die "cycle name '$__raw' is not usable: $CYCLE_RULE"
+    say "  Not a usable cycle name: $CYCLE_RULE."
+  done
 }
 
 default_cycle() {
@@ -256,10 +320,12 @@ list_formats() {
 
 format_title() { sed -n '1s/^# *//p' "$1"; }
 
-# The numbered lines under "## Questions", cut at the first period or question mark.
+# The questions under "## Questions", shortened to their first clause (cut at
+# the first period or question mark), as the setup workflow says. Built-in
+# formats number them; a workspace override may use "- " bullets instead.
 format_questions() {
   sed -n '/^## Questions/,/^## /p' "$1" \
-    | sed -n 's/^[0-9][0-9]*\. *//p' \
+    | sed -n -e 's/^[0-9][0-9]*\. *//p' -e t -e 's/^- *//p' \
     | sed -e 's/[.?].*$//' -e 's/[[:space:]]*$//'
 }
 
@@ -298,11 +364,16 @@ write_if_absent() {
 }
 
 # render_person NAME SLUG RELATION ROLE
+# Substitutes into harness/templates/person.md so new lines in the template
+# (the **Handles:** line, the placeholder paragraphs) come through as they are.
+# The script does not collect handles, so their placeholders are left blank;
+# the free-text prompts stay for the owner to fill in.
 render_person() {
   sed -e "s~<Name>~$(sed_esc "$1")~g" \
       -e "s~<slug>~$(sed_esc "$2")~g" \
       -e "s~<manager | peer | report>~$(sed_esc "$3")~g" \
       -e "s~<role, team>~$(sed_esc "$4")~g" \
+      -e '/^\*\*Handles:\*\*/ s~<[^>]*>~~g' \
       "$TEMPLATES/person.md"
 }
 
@@ -400,7 +471,7 @@ EOF
   say '  slug: self'
   kv '  ' role "$OWNER_ROLE"
   kv '  ' company "$OWNER_COMPANY"
-  aligned "  language: $OWNER_LANG" '# language the reviews are written in (en, sv, de, ...)'
+  aligned "  language: $(yaml_str "$OWNER_LANG")" '# language the reviews are written in (en, sv, de, ...)'
   cat <<'EOF'
   handles:                # optional, used by the evidence workflow
     github:
@@ -410,7 +481,7 @@ EOF
     jira:
 
 EOF
-  aligned "cycle: $CYCLE" '# current cycle, a folder under cycles/'
+  aligned "cycle: $(yaml_str "$CYCLE")" '# current cycle, a folder under cycles/'
   say ''
   if [ "${#NEW_NAME[@]}" -eq 0 ]; then
     say 'people: []'
@@ -452,8 +523,9 @@ EOF
 
 evidence:
   window_months: 6
-  sources: [github, linear, slack, notes]   # tried in this order, skipped if unavailable
+  sources: [github, linear, slack, notes]   # tried in this order, skipped if unavailable; add gitlab and jira if you use them
   github_orgs: []
+  gitlab_groups: []
 EOF
 }
 
@@ -472,6 +544,31 @@ unquote() {
   printf '%s' "$v"
 }
 
+# Drop a trailing "   # comment" from a config line. A " #" inside a quoted
+# value ("Maya # 1") is part of the value and stays.
+strip_comment() {
+  local line=$1 val v re
+  case "$line" in *'#'*) ;; *) printf '%s' "$line"; return 0 ;; esac
+  case "$(trim "$line")" in \#*) return 0 ;; esac
+  case "$line" in
+    *:*)
+      val=${line#*:}
+      v=${val#"${val%%[![:space:]]*}"}
+      re='^"([^"\\]|\\.)*"'
+      if [[ $v == \"* ]] && [[ $v =~ $re ]]; then
+        printf '%s' "${line%%:*}:${val%%"$v"}${BASH_REMATCH[0]}"
+        return 0
+      fi
+      re="^'([^']|'')*'"
+      if [[ $v == \'* ]] && [[ $v =~ $re ]]; then
+        printf '%s' "${line%%:*}:${val%%"$v"}${BASH_REMATCH[0]}"
+        return 0
+      fi
+      ;;
+  esac
+  printf '%s' "${line%%[[:space:]]#*}"
+}
+
 # A line-by-line reader for the shape of harness/templates/config.yml.
 # It does not parse YAML in general; it reads the file the setup workflow writes.
 load_config() {
@@ -480,7 +577,7 @@ load_config() {
   P_NAME=() P_SLUG=() P_REL=() P_ROLE=()
   R_PERSON=() R_FORMAT=()
   while IFS= read -r line || [ -n "$line" ]; do
-    line=${line%%[[:space:]]#*}
+    line=$(strip_comment "$line")
     t=$(trim "$line")
     case "$t" in ''|\#*) continue ;; esac
     case "$line" in
@@ -533,7 +630,7 @@ name_for_slug() {
 # Appends at the end of a top-level list in config.yml. Blank lines and comments
 # around the list are kept where they are.
 config_append_items() {
-  local section=$1 items line cur='' held=0 done=0 tmp
+  local section=$1 items line rest cur='' held=0 done=0 tmp
   items=$(cat)
   tmp=$(mktemp "${TMPDIR:-/tmp}/rh-setup.XXXXXX")
   while IFS= read -r line || [ -n "$line" ]; do
@@ -543,7 +640,14 @@ config_append_items() {
         if [ "$cur" = "$section" ] && [ "$done" -eq 0 ]; then printf '%s\n' "$items"; done=1; fi
         cur=${line%%:*}
         if [ "$cur" = "$section" ]; then
-          case "$line" in *'[]'*) line=$(trim "${line%%\[\]*}") ;; esac
+          # "people: []" becomes "people:"; an aligned comment after the [] stays.
+          case "$line" in
+            *'[]'*)
+              rest=${line#*\[\]}
+              line=$(trim "${line%%\[\]*}")
+              case "$rest" in *'#'*) line=$(aligned "$line" "#${rest#*#}") ;; esac
+              ;;
+          esac
         fi
         ;;
     esac
@@ -565,7 +669,7 @@ config_set_cycle() {
       cycle:*)
         comment=''
         case "$line" in *'#'*) comment="#${line#*#}" ;; esac
-        if [ -n "$comment" ]; then aligned "cycle: $1" "$comment"; else say "cycle: $1"; fi
+        if [ -n "$comment" ]; then aligned "cycle: $(yaml_str "$1")" "$comment"; else say "cycle: $(yaml_str "$1")"; fi
         found=1
         ;;
       *) printf '%s\n' "$line" ;;
@@ -619,6 +723,10 @@ collect_people_interactively() {
     say ''
     ask name "Person $n, name" ''
     [ -n "$name" ] || break
+    if person_exists "$name"; then
+      printf '  %skept%s     %s is already in config.yml\n' "$DIM" "$RESET" "$name"
+      continue
+    fi
     while :; do
       ask relation "  relation (manager/peer/report)" peer
       relation=$(lower "$relation")
@@ -654,9 +762,8 @@ fresh_setup() {
   ask OWNER_COMPANY "Your company" "${RH_COMPANY-}"
   ask OWNER_LANG "Language for reviews" "${RH_LANG:-en}"
   OWNER_LANG=$(lower "$OWNER_LANG")
-  ask CYCLE "Cycle name" "${RH_CYCLE:-$(default_cycle)}"
-  CYCLE=$(slugify_cycle "$CYCLE")
-  [ -n "$CYCLE" ] || CYCLE=$(default_cycle)
+  [ -n "$OWNER_LANG" ] || OWNER_LANG=en
+  ask_cycle CYCLE "${RH_CYCLE:-$(default_cycle)}"
 
   if [ "$YES" = 1 ]; then
     collect_people_from_env
@@ -665,7 +772,7 @@ fresh_setup() {
     say ''
   fi
 
-  if ask_yn "Self review this cycle?" "$(lower "${RH_SELF:-y}")"; then SELF_REVIEW=1; else SELF_REVIEW=0; fi
+  if ask_yn "Self review this cycle?" "${RH_SELF:-y}"; then SELF_REVIEW=1; else SELF_REVIEW=0; fi
 
   heading "Writing files"
   local content i=0
@@ -723,7 +830,7 @@ show_existing() {
 start_cycle() {
   local cycle i=0
   cycle=$(slugify_cycle "$1")
-  [ -n "$cycle" ] || die "empty cycle name"
+  valid_cycle "$cycle" || die "cycle name '$1' is not usable: $CYCLE_RULE"
   heading "Cycle $cycle"
   if [ "$cycle" != "$CFG_CYCLE" ]; then
     config_set_cycle "$cycle"
@@ -812,7 +919,7 @@ extend_setup() {
       ask choice "Choice" q
       case "$choice" in
         1)
-          ask cycle "Cycle name" "$(default_cycle)"
+          ask_cycle cycle "$(default_cycle)"
           start_cycle "$cycle"
           ;;
         2)
@@ -835,6 +942,42 @@ extend_setup() {
 # Privacy check and next steps
 # ---------------------------------------------------------------------------
 
+# Say whether origin is the upstream Review Harness repository rather than the
+# owner's own copy. With gh logged in the owner's login settles it; without it,
+# a remote that names review-harness gets a conditional warning.
+check_upstream_remote() {
+  local url login='' owner_part
+  url=$(git -C "$ROOT" config --get remote.origin.url 2>/dev/null) || url=''
+  [ -n "$url" ] || return 0
+  case "$(lower "$url")" in *review-harness*) ;; *) return 0 ;; esac
+  if command -v gh >/dev/null 2>&1; then
+    login=$(gh api user -q .login 2>/dev/null) || login=''
+  fi
+  if [ -n "$login" ]; then
+    # Everything before the last path segment, down to the preceding : or /
+    owner_part=${url%/*}
+    owner_part=${owner_part##*[/:]}
+    [ "$(lower "$owner_part")" = "$(lower "$login")" ] && return 0
+    warn "origin points at $url, which is not your own repository."
+  else
+    warn "origin points at $url. If this remote is not your own repository:"
+  fi
+  say "  Create a private repository and point origin at it before committing anything:"
+  say "    git remote set-url origin <url>"
+}
+
+# Uncomment the two workspace/** lines in .gitignore. If they are not there at
+# all, add both. Never add a third.
+ignore_workspace() {
+  local tmp
+  tmp=$(mktemp "${TMPDIR:-/tmp}/rh-setup.XXXXXX")
+  sed -e 's~^# workspace/\*\*$~workspace/**~' -e 's~^# !workspace/README\.md$~!workspace/README.md~' "$ROOT/.gitignore" >"$tmp"
+  grep -q -x -F 'workspace/**' "$tmp" || printf 'workspace/**\n' >>"$tmp"
+  grep -q -x -F '!workspace/README.md' "$tmp" || printf '!workspace/README.md\n' >>"$tmp"
+  mv "$tmp" "$ROOT/.gitignore"
+  printf '  %supdated%s  .gitignore\n' "$GREEN" "$RESET"
+}
+
 privacy_check() {
   heading "Privacy"
   say "Reviews contain candid judgments about colleagues. Keep the workspace private."
@@ -846,18 +989,11 @@ privacy_check() {
     case "$(lower "$vis")" in
       public)
         warn "This repository is PUBLIC on GitHub."
+        check_upstream_remote
         say "  Make it private, or keep the workspace out of git by uncommenting the two"
         say "  workspace lines in .gitignore."
         if [ "$YES" != 1 ] && [ -f "$ROOT/.gitignore" ] && ask_yn "  Add workspace/ to .gitignore now?" n; then
-          local tmp
-          tmp=$(mktemp "${TMPDIR:-/tmp}/rh-setup.XXXXXX")
-          sed -e 's~^# workspace/\*\*$~workspace/**~' -e 's~^# !workspace/README\.md$~!workspace/README.md~' "$ROOT/.gitignore" >"$tmp"
-          case "$(cat "$tmp")" in
-            'workspace/**'|'workspace/**'$'\n'*|*$'\n''workspace/**'|*$'\n''workspace/**'$'\n'*) ;;
-            *) printf 'workspace/**\n!workspace/README.md\n' >>"$tmp" ;;
-          esac
-          mv "$tmp" "$ROOT/.gitignore"
-          printf '  %supdated%s  .gitignore\n' "$GREEN" "$RESET"
+          ignore_workspace
         fi
         ;;
       private|internal)

@@ -8,9 +8,9 @@ This folder is empty until you run setup. Ask your AI harness to run `review-set
 config.yml            who you are, who you review, the current cycle
 voice/profile.md      how you write, built from voice/samples/
 voice/samples/        past reviews and other writing you did
-people/<slug>.md      background on each person
+people/<slug>.md      background on each person, plus a **Handles** line the evidence workflow searches by
 formats/<type>.md     optional overrides of the built-in question sets
 cycles/<cycle>/       one folder per review: progress.md, evidence.md, notes.md, review.md
 ```
 
-**Keep this private.** Reviews contain candid judgments about real colleagues. Use a private repository, or uncomment the `workspace/**` lines in `.gitignore` to keep it out of git entirely.
+**Keep this private.** Use a private repository, or uncomment the `workspace/**` lines in [.gitignore](../.gitignore) to keep it out of git entirely. Why: [docs/privacy.md](../docs/privacy.md).

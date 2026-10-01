@@ -4,7 +4,7 @@ Build or refresh `<workspace>/voice/profile.md`, the description of how the owne
 
 ## 1. Gather samples
 
-Read everything in `<workspace>/voice/samples/`. Good samples, in order of value: reviews the owner wrote before, feedback they gave in writing, long Slack or email messages, design docs, retro notes. Ignore anything obviously written by someone else or by an AI, and say which files you skipped and why.
+Read everything in `<workspace>/voice/samples/` except `README.md`. Good samples, in order of value: reviews the owner wrote before, feedback they gave in writing, long Slack or email messages, design docs, retro notes. Ignore anything obviously written by someone else or by an AI, and say which files you skipped and why.
 
 If there are no samples, do not guess. Ask the owner to paste two or three things they wrote, or point you at files. If they have nothing, run the short interview in step 3 and mark the profile as provisional.
 
@@ -32,7 +32,7 @@ Even with good samples, ask, in one message:
 
 ## 4. Write the profile
 
-Fill `harness/templates/voice-profile.md` and save it to `<workspace>/voice/profile.md`. Quote generously. Keep it under a page and a half. End the `## Do not` section with the owner's own answers from step 3.
+Fill `harness/templates/voice-profile.md` and save it to `<workspace>/voice/profile.md`. Quote generously. Keep it under about 900 words. End the `## Do not` section with the owner's own answers from step 3.
 
 Show the profile in full and ask for corrections. Apply them exactly. The owner may tell you their writing is worse than it looks or better than it looks. Believe them; the profile describes how they want to sound.
 

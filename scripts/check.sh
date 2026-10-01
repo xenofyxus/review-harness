@@ -282,10 +282,13 @@ check_adapters() {
     return
   fi
 
+  # The copy lives under TMPDIR, which may contain spaces, so the awk below
+  # splits on the known prefix and on " and ./" rather than on blanks.
   changes=$(diff -r -q -x .git -x workspace "$copy" . 2>&1 | awk -v copy="$copy" '
     /^Files / {
-      sub(/^Files [^ ]+ and \.\//, ""); sub(/ differ$/, "")
-      print $0 " would change"; next
+      rest = substr($0, length("Files ") + length(copy) + 2)
+      i = index(rest, " and ./"); if (i > 0) rest = substr(rest, 1, i - 1)
+      print rest " would change"; next
     }
     /^Only in / {
       sub(/^Only in /, ""); i = index($0, ": "); dir = substr($0, 1, i - 1); name = substr($0, i + 2)
@@ -382,7 +385,7 @@ check_templates() {
 # ---------------------------------------------------------------------------
 
 check_examples() {
-  local dir=examples/demo-workspace/cycles f n line first bad='' count=0
+  local dir=examples/demo-workspace/cycles f n line first in_comment bad='' count=0
 
   if [ ! -d "$dir" ]; then
     skip "examples: $dir does not exist yet"
@@ -392,10 +395,21 @@ check_examples() {
   for f in "$dir"/*/*/review.md; do
     [ -f "$f" ] || continue
     count=$((count + 1))
-    n=0; first=1
+    n=0; first=1; in_comment=0
     while IFS= read -r line || [ -n "$line" ]; do
       n=$((n + 1))
-      case "$line" in ''|'<!--'*) continue ;; esac
+      # Blank lines and HTML comments are not content. A comment that opens
+      # without closing on the same line hides every line up to the one that
+      # closes it.
+      if [ "$in_comment" = 1 ]; then
+        case "$line" in *'-->'*) in_comment=0 ;; esac
+        continue
+      fi
+      case "$line" in
+        '') continue ;;
+        '<!--'*'-->'*) continue ;;
+        '<!--'*) in_comment=1; continue ;;
+      esac
       if [ "$first" = 1 ]; then
         first=0
         case "$line" in '# '*) continue ;; esac   # a document title on top is fine

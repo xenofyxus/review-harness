@@ -1,6 +1,6 @@
 # Self review
 
-Your own review for the cycle. Read by your manager and often used in calibration. Six questions. Honest about setbacks, concrete about accomplishments, specific about plans.
+Your own review for the cycle. Read by your manager and often used in calibration. Six questions. The useful ones are honest about what went wrong and concrete about what happened next.
 
 ## Questions
 

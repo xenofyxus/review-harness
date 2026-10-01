@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="150" viewBox="0 0 720 150" role="img" aria-label="Review Harness">
+  <rect width="720" height="150" rx="16" fill="#ffffff"/>
+  <g transform="translate(40,33)">
+    <rect x="0" y="0" width="58" height="42" rx="12" fill="#2563eb"/>
+    <rect x="26" y="26" width="58" height="42" rx="12" fill="#f59e0b" fill-opacity="0.92"/>
+    <path d="M40 46 l9 9 l18 -20" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="150" y="72" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#111827" letter-spacing="-0.5">Review Harness</text>
+  <text x="152" y="106" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#4b5563">Interview-driven performance reviews that sound like you.</text>
+</svg>

@@ -26,9 +26,9 @@ Answers open with the answer. "Easy." "The thing I'd point to is." "Take the lea
 
 Long sentence, then a short one, then a fragment. "You did it in six weeks, mostly on your own, while the rest of us were busy with the Velox Express onboarding, and the only reason I know how much work it was is that I reviewed the PRs. Boring, careful, exactly right."
 
-One paragraph per answer is the norm, two at most. Paragraphs close with an instruction or a wish, not a summary: "Let's both call sooner." "More of that, please."
+One to three paragraphs per answer. The sample stays at one or two; a third is for a second example or a disagreement worth laying out, never padding. Paragraphs close with an instruction or a wish, not a summary: "Let's both call sooner." "More of that, please."
 
-Development feedback is one paragraph: the behaviour in the first sentence, the cost with a date in the second or third, her own share, then the wish.
+Development feedback keeps one order whatever its length: the behaviour in the first sentence, the cost with a date in the second or third, her own share, then the wish.
 
 ## Words and phrases they use
 

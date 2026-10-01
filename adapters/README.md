@@ -1,6 +1,6 @@
 # Adapters
 
-An adapter is the small file an AI harness needs in order to find a Review Harness command. Every adapter says the same thing: read `AGENTS.md`, then follow one file under `harness/workflows/`. That is all it does. The questions, the method and the writing rules live in `harness/` and are never copied into an adapter, so a fix there reaches every harness at once.
+An adapter is the small file a harness needs in order to find a Review Harness command. Every adapter says the same thing: with `AGENTS.md` loaded, follow one file under `harness/workflows/`. That is all it does. The questions, the method and the writing rules live in `harness/` and are never copied into an adapter, so a fix there reaches every harness at once.
 
 ## Source of truth
 
@@ -23,9 +23,9 @@ An adapter is the small file an AI harness needs in order to find a Review Harne
 | `AGENTS.md` alone | Amp, Zed, anything else that reads `AGENTS.md` | "run the review workflow for peer priya" |
 | `standalone/<format>.md` | Chat tools with no file access | paste the file, say `start` |
 
-Swap `review` for `review-setup`, `review-evidence`, `review-voice` or `review-status` for the other commands. Arguments are free text after the command everywhere. Claude Code and OpenCode substitute them into the prompt, the others append them, and the workflows accept loose input either way.
+Swap `review` for `review-setup`, `review-evidence`, `review-voice` or `review-status` for the other commands. Arguments are whatever the owner types after the command. Claude Code and OpenCode substitute them for `$ARGUMENTS` in the prompt, Gemini CLI substitutes them for `{{args}}`, and the others (Cursor, Codex, Cline, Copilot, Windsurf, Roo, Kilo) receive them as free text after the command. The workflows accept loose input either way, and the skill files say what to do when `$ARGUMENTS` shows up as a literal placeholder.
 
-Claude Code, Gemini CLI, Codex and Copilot read `AGENTS.md` on their own (`CLAUDE.md` and `GEMINI.md` import it), so the skills do not repeat that. Every other adapter says to read it first.
+Every command file (OpenCode, Gemini CLI, Copilot, Windsurf, Roo, Kilo) opens with "Read AGENTS.md". Only the skill files leave it out, because Claude Code, Cursor, Codex and Cline load `AGENTS.md` themselves (Claude Code through `CLAUDE.md`, which imports it). The skill files instead say where `AGENTS.md` and `harness/` sit when the skills were installed as a Claude Code plugin, and that the workspace is never a folder inside the plugin.
 
 ## Regenerate
 
@@ -36,7 +36,7 @@ It overwrites every generated file, removes files for commands or formats that a
 ## Add a harness
 
 1. Find its convention: which directory it reads, the file format and frontmatter it expects, how a command is invoked and how arguments arrive.
-2. In `scripts/build-adapters.sh`, add a `write_<harness>` function next to the others, call it from the per-command loop, add a cleanup line for its directory, and list the directory in the header comment and in `OWNED`. Keep the body to a pointer at the workflow file.
+2. In `scripts/build-adapters.sh`, add a `write_<harness>` function next to the others, call it from the per-command loop, add a `remove_stale_files` line for its directory, and list the directory in the header comment and in `OWNED`. There are no template files under `adapters/`; the shape of each generated file lives in its `write_<harness>` function. Keep the body to a pointer at the workflow file.
 3. Add a row to the table above and to `docs/harnesses.md`.
 4. Run the script twice and check that `git status` shows only the new files.
 

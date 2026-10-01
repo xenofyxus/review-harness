@@ -23,6 +23,8 @@ Each file bundles `PREAMBLE.md`, `harness/principles.md`, `harness/workflows/rev
 
 Every reply that confirms an answer ends with a `Progress` block. To continue later, open a new chat, paste the prompt again, then paste the latest `Progress` block. The assistant picks up from the first unanswered question.
 
+Once a draft exists, the `Progress` block also names the current draft number. To resume during drafting or iteration, paste the `Progress` block and the latest draft text together. The assistant continues iterating on that draft; it will ask for the draft if the block says one exists and none was pasted, and it never rebuilds a draft from the notes alone.
+
 ## Regenerate
 
 These files are written by `scripts/build-adapters.sh` from `PREAMBLE.md` and the harness files. Edit those and run the script. Changes made directly to a generated file are lost on the next run.

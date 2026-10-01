@@ -27,5 +27,5 @@ For someone who reports to you. Read by them, used in calibration and in compens
 - Every development point in Q3 has an example, a reason and a picture of what better looks like.
 - The owner's own commitment in Q5 is concrete.
 - Q1 and Q2 are not padding for Q3. If the praise is generic and the criticism specific, say so.
-- Nothing the person could reasonably not have known about appears here for the first time. If it does, flag it.
+- No surprises: every development point is something the person has already heard from the owner. If one is new, flag it.
 - Language is fair: same standard the owner would apply to anyone in the role.

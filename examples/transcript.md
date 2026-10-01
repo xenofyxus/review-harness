@@ -1,14 +1,14 @@
 # Transcript: peer review for Priya, cycle 2026-h2
 
-A condensed record of the interview that produced `demo-workspace/cycles/2026-h2/priya/review.md`. Everything in it is fictional. The owner is Maya Lindqvist; "Harness" is whichever AI harness is running the review workflow. Questions 2 and 3 are summarised rather than reproduced, and the draft is not repeated in full, since it is the file next door. What remains shows the shape of a good session: one question at a time, evidence offered as prompts, a summary before every save, flags with the draft, and the owner deciding what is final.
+A condensed record of the interview that produced `demo-workspace/cycles/2026-h2/priya/review.md`. Everything in it is fictional. The owner is Maya Lindqvist; "Harness" is whichever AI harness is running the review workflow. Questions 2 and 3 are summarised rather than reproduced, and the draft is not repeated in full, since it is the file next door. What remains shows the shape of a good session. The harness asks one question at a time and offers evidence as prompts rather than conclusions. It summarises before every save and puts its flags under the draft. The owner decides what is final.
 
 The session was started with `review peer priya`.
 
 ---
 
-**Harness:** I have read the principles, `config.yml`, your voice profile, the peer format, `people/priya.md`, and the evidence file from 22 September. Evidence covers 22 March to 22 September from GitHub, Linear and Slack: the Nordfrakt migration, the webhook reliability work, and her reviews and lunch talk. I also skimmed your 2025 review of her. Last year's development point was support tickets, and you noted in her people file that a rotation happened in February, so I will ask about that under question 4.
+**Harness:** I have read the principles, `config.yml`, your voice profile, the peer format, `people/priya.md`, the evidence from 22 September and your 2025 review of her. The evidence covers 22 March to 22 September from GitHub, Linear and Slack: the Nordfrakt migration, the webhook reliability work, and her reviews and lunch talk. Last year's development point was support tickets, and her people file says a rotation happened in February, so I will ask about that under question 4.
 
-Four questions, one at a time. After each answer I will follow up once or twice, summarise, and ask you to confirm before I save. Say "skip" or "come back to this" at any point. Ready when you are.
+Four questions, taken from `harness/formats/peer.md`. If your form uses different ones, paste them now and I will use those instead. One at a time: after each answer I will follow up once or twice, summarise, and ask you to confirm before I save. Say "skip" or "come back to this" at any point. Ready when you are.
 
 **Maya:** Go.
 
@@ -58,21 +58,17 @@ And the rotation: she set it up in February, it stuck, and my point from last ye
 
 Flags, reading it as Priya, then as you, then as a sceptical HR reader:
 
-Not theirs: "eighteen tickets" in Q1 and "sixty-one PRs, fourteen of them mine" in Q3 come from the evidence file. You confirmed both. Say the word and I cut either.
-
-Too soft: the opening of Q2, "One thing I would like to see you work on", is a cushion. Your profile says you state the behaviour flat in the first sentence. Want it sharper?
-
-Missing context: a reader outside the team will not know what "the SOAP adapter" is. Q1 now says "old label API" first, which may be enough. Your call.
-
-Contradiction check: Q1 praises how she ran the 12 May incident, Q2 says she goes quiet. The Q2 paragraph names 12 May as the counterexample, so they fit. No change proposed.
-
-Voice: Q4 ends on two short sentences, which matches your closes. Q3's third paragraph has "Small thing, and we have fixed it", which is yours from the interview.
-
-Something only she does: the "what happens if" reviews. That could not be pasted into anyone else's review.
+- Not theirs: "eighteen tickets" in Q1 and "sixty-one PRs, fourteen of them mine" in Q3 come from the evidence file. You confirmed both. Say the word and I cut either.
+- Too soft: the opening of Q2, "One thing I would like to see you work on", is a cushion. Your profile says you state the behaviour flat in the first sentence. Want it sharper?
+- Missing context: a reader outside the team will not know what "the SOAP adapter" is. Q1 says "old label API" before it says SOAP adapter, which may be enough. Your call.
+- Contradictory: Q1 praises how she ran the 12 May incident, Q2 says she goes quiet. Q2 names 12 May as the counterexample, so they fit. No change proposed.
+- Voice: Q1, Q2 and Q3 each run to three paragraphs, the top of the range in your profile, and the 2025 review never went past two. Say the word and I trim Q1 or Q3.
+- Voice: Q4 ends on two short sentences, which matches your closes, and "Small thing, and we have fixed it" in Q3 is yours from the interview. Nothing to fix.
+- Only she does: the "what happens if" reviews. That could not be pasted into anyone else's review.
 
 Mechanical checks: no em dashes, no words from the vocabulary list, no lists or headers inside answers.
 
-**Maya:** Keep both numbers. The SOAP adapter is fine, Tomas knows what it is and so does she. On Q2, you are right that it is soft, but the fix is not "sharper", it is that the sentence is not mine. Make it: "When a problem is hard, you tend to disappear into it. I do the same, so I recognise it." Then straight into the customs example.
+**Maya:** Keep both numbers. The SOAP adapter is fine, Tomas knows what it is and so does she. Leave the length. On Q2, you are right that it is soft, but the fix is not "sharper", it is that the sentence is not mine. Make it: "When a problem is hard, you tend to disappear into it. I do the same, so I recognise it." Then straight into the customs example.
 
 **Harness:** Applied exactly, nothing else touched. The changed passage:
 

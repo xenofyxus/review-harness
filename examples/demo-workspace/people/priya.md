@@ -4,6 +4,7 @@
 **Relation to me:** peer
 **Role:** Backend Engineer, backend team
 **Worked together since:** March 2024
+**Handles:** github: priya-nair | gitlab: | slack: U0PRIYA12 | linear: Priya Nair | jira:
 
 ## Background
 
@@ -15,4 +16,4 @@ I wrote her peer review last cycle, see `voice/samples/2025-peer-review-priya.md
 
 ## Things I want to remember
 
-Handles for evidence: GitHub `priyanair-nw`, Slack `U03P9NR2J7`, Linear `Priya Nair`. The customs mapping week in June, where she went quiet for days and then we sorted it in one afternoon of pairing. The 12 May incident, where she did the opposite and pulled everyone in at once. Her lunch talk in August was the clearest explanation of retries I have heard here.
+The customs mapping week in June, where she went quiet for days and then we sorted it in one afternoon of pairing. The 12 May incident, where she did the opposite and pulled everyone in at once. Her lunch talk in August was the clearest explanation of retries I have heard here.

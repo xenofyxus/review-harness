@@ -6,8 +6,8 @@ Compiled 22 September 2026 from GitHub (`gh` CLI, org `northwind-labs`), Linear 
 
 | | |
 |---|---|
-| Merged PRs | 47 (29 carrier-gateway, 11 webhook-dispatcher, 7 shipping-core) |
-| PRs reviewed for others | 61, for 9 authors (14 for mayalq, 11 for tomasberg, 9 for lena-ohlin, 27 across six others) |
+| Merged PRs | 48 (29 carrier-gateway, 11 webhook-dispatcher, 7 shipping-core, 1 infra) |
+| PRs reviewed for others | 61, for 9 authors (14 for mayalq, 11 for tberg, 9 for lena-ohlin, 27 across six others) |
 | Issues closed | 38 (18 Nordfrakt label API migration, 9 Webhook delivery reliability, 11 unprojected) |
 | Notable incidents handled | 2 (12 May, 28 August) |
 
@@ -33,11 +33,11 @@ Linear project "Nordfrakt label API migration", lead Priya Nair, 18 issues, 18 d
 
 ### Webhook delivery reliability (May to August)
 
-12 May 09:14: Priya opens a thread in #incidents, webhook dispatcher stalled, tracking events not delivered to customers. She coordinates the thread, pulls in tomasberg and lena-ohlin, posts the all-clear at 09:58. Roughly 3,100 events delayed, all delivered by 10:30. https://northwind.slack.com/archives/C02N7CD8RK/p1778577251000000
+12 May 09:14: Priya opens a thread in #incidents, webhook dispatcher stalled, tracking events not delivered to customers. She coordinates the thread, pulls in tberg and lena-ohlin, posts the all-clear at 09:58. Roughly 3,100 events delayed, all delivered by 10:30. https://northwind.slack.com/archives/C02N7CD8RK/p1778577251000000
 
 13 May: postmortem document in Linear, author Priya Nair, three action items BE-1861, BE-1862, BE-1863 created unassigned. https://linear.app/northwind/document/postmortem-2026-05-12-webhook-dispatcher-stall-9c1e3a4f
 
-4 June: tomasberg asks in #backend, right after standup, who owns the postmortem action items; all three assigned to Priya the same day. https://northwind.slack.com/archives/C03B7KND2Q/p1780567331000000
+4 June: tberg asks in #backend, right after standup, who owns the postmortem action items; all three assigned to Priya the same day. https://northwind.slack.com/archives/C03B7KND2Q/p1780567331000000
 
 11 June: webhook-dispatcher#77 "Add persistent retry queue for webhook delivery" (BE-1861). https://github.com/northwind-labs/webhook-dispatcher/pull/77
 
@@ -67,7 +67,7 @@ No delivery incidents in #incidents between 12 May and 22 September other than t
 
 8 to 12 June, BE-1907 quiet for five days, then closed after a co-authored PR. https://linear.app/northwind/issue/BE-1907
 
-4 June, postmortem action items unassigned for three weeks until tomasberg asked. https://northwind.slack.com/archives/C03B7KND2Q/p1780567331000000
+4 June, postmortem action items unassigned for three weeks until tberg asked. https://northwind.slack.com/archives/C03B7KND2Q/p1780567331000000
 
 24 June, Nordfrakt cutover with a week to spare before the 1 July shutdown. https://northwind.slack.com/archives/C04L9NCH3P/p1782315011000000
 

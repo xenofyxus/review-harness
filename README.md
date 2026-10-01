@@ -1,10 +1,13 @@
-<h1 align="center">Review Harness</h1>
-
-<p align="center"><em>Interview-driven performance reviews that sound like you.</em></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/wordmark-dark.svg">
+    <img alt="Review Harness. Interview-driven performance reviews that sound like you." src="docs/assets/wordmark-light.svg" width="720">
+  </picture>
+</p>
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-blue"></a>
-  <a href="docs/harnesses.md"><img alt="Works with Claude Code, Cursor, Codex, Gemini CLI, OpenCode, Copilot, Windsurf" src="https://img.shields.io/badge/works%20with-Claude%20Code%20%C2%B7%20Cursor%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20OpenCode%20%C2%B7%20Copilot%20%C2%B7%20Windsurf-8A2BE2"></a>
+  <a href="docs/harnesses.md"><img alt="Adapters for Claude Code, Cursor, Codex, Gemini CLI, OpenCode, Copilot, Windsurf" src="https://img.shields.io/badge/adapters%20for-Claude%20Code%20%C2%B7%20Cursor%20%C2%B7%20Codex%20%C2%B7%20Gemini%20CLI%20%C2%B7%20OpenCode%20%C2%B7%20Copilot%20%C2%B7%20Windsurf-8A2BE2"></a>
   <a href="harness/principles.md"><img alt="em dashes: 0" src="https://img.shields.io/badge/em%20dashes-0-success"></a>
 </p>
 
@@ -14,23 +17,25 @@ Reviews written from memory are vague. You sit down the night before the deadlin
 
 Asking an AI to write one produces slop. It has never met the person, so it pads. Every sentence could be pasted into someone else's review unchanged, and the reader can tell.
 
-This harness does neither. It interviews you one question at a time and pushes for the situation, the effect and the counterexample. Before that, it pulls six months of real evidence from GitHub, Linear and Slack so the questions are concrete. Then it drafts in your voice, learned from your own past writing.
+Review Harness does neither. It interviews you one question at a time and pushes for the situation, the effect and the counterexample. Before that, it pulls six months of real evidence from GitHub, Linear and Slack so the questions are concrete. Then it drafts in your voice, learned from your own past writing.
 
 You stay in charge of every word. Nothing goes in that you did not say, the draft arrives with its own list of weak spots, and the review is final only when you say so.
 
-## Sixty seconds to start
+## Getting started
 
-1. **Get a copy.** Click *Use this template* on GitHub and make the new repository private, or clone this one.
-2. **Set up the workspace.** Open the folder in your harness and say "run review-setup". It asks who you are and who you review this cycle, then writes `workspace/`. Claude Code: `/review-setup`
-3. **Teach it your voice.** Drop past reviews, written feedback or long messages into `workspace/voice/samples/`, then say "run review-voice". Claude Code: `/review-voice`
-4. **Gather evidence.** Say "run review-evidence priya". Six months of PRs, tickets and messages, themed, every line linked. Claude Code: `/review-evidence priya`
-5. **Interview and draft.** Say "run review peer priya". One question at a time, then a draft with its flags. Claude Code: `/review peer priya`
+You need an AI coding tool that can read files and run shell commands (see [Works with](#works-with)), plus `gh` logged in and any MCP connectors you already have for evidence.
 
-In other tools the same names work after `/`, after `$`, or in plain English. See [docs/harnesses.md](docs/harnesses.md).
+1. **Get a copy.** Click *Use this template* on GitHub and make the new repository private, or clone this one and point `origin` at a private repository of your own before you commit anything.
+2. **Set up the workspace.** Open the folder in your harness and say "run review-setup". It asks who you are and who you review this cycle, then writes `workspace/`.
+3. **Teach it your voice.** Drop past reviews, written feedback or long messages into `workspace/voice/samples/`, then say "run review-voice".
+4. **Gather evidence.** Say "run review-evidence priya". Six months of PRs, tickets and messages, themed, every line linked.
+5. **Interview and draft.** Say "run review peer priya". One question at a time, then a draft with its flags.
+
+In Claude Code every command is a slash command: `/review-setup`, `/review-voice`, `/review-evidence priya`, `/review peer priya`, `/review-status`. Other tools: [docs/harnesses.md](docs/harnesses.md). `priya` is the slug setup chose for that person, their lowercase first name; it is how you name someone in every command. Voice and evidence are optional, but the interview is much better with them.
 
 ## See it first
 
-[examples/transcript.md](examples/transcript.md) is a condensed interview, from the opening line to "that is final". [examples/demo-workspace/](examples/demo-workspace/) is the finished workspace it produced: config, voice profile, evidence, progress notes and the review. Both are fictional. Ten minutes with them and you know what a good session looks like.
+[examples/transcript.md](examples/transcript.md) is a condensed interview, from the opening line to "that is final". [examples/demo-workspace/](examples/demo-workspace/) is the finished workspace it produced: config, voice profile, evidence, progress notes and the review. Both are fictional.
 
 ## What it produces
 
@@ -38,7 +43,7 @@ In other tools the same names work after `/`, after `$`, or in plain English. Se
 workspace/cycles/2026-h2/priya/
 ├── progress.md     interview state: status, ticked questions, your confirmed notes
 ├── evidence.md     what GitHub, Linear and Slack showed, themed, every line linked
-├── notes.md        whatever you dropped in by hand during the cycle
+├── notes.md        anything you drop in by hand; you create this file, the harness only reads it
 └── review.md       the draft, then the final review
 ```
 
@@ -48,7 +53,7 @@ workspace/cycles/2026-h2/priya/
 
 1. `AGENTS.md` is the entrypoint. Every harness reads it, directly or through a one-line import such as `CLAUDE.md`.
 2. All logic is plain markdown under `harness/`: the principles, one workflow per command, the question formats, the source recipes, the templates.
-3. Each harness gets a thin adapter that says "follow `harness/workflows/review.md`" and nothing else. No logic is duplicated.
+3. Each harness gets a thin adapter that says "follow `harness/workflows/review.md`" and nothing else. No workflow text is copied by hand; the standalone prompts are generated.
 4. Your data lives in `workspace/`: config, people, voice profile, and one folder per review per cycle.
 5. Every draft is checked against the writing rules and your voice profile before you see it, and comes with flags for what is vague, contradictory, too soft or too harsh.
 
@@ -104,7 +109,8 @@ Everything is read only. Setup per source is in [docs/evidence.md](docs/evidence
 
 | Harness | How to invoke | Status |
 |---|---|---|
-| Claude Code | `/review peer priya`, or `/review-harness:review peer priya` as a plugin | Tested |
+| Claude Code | `/review peer priya` | Tested |
+| Claude Code plugin | `/review-harness:review peer priya` | Generated, untested |
 | Cursor | `/review peer priya` | Generated, untested |
 | Codex CLI | `$review peer priya` | Generated, untested |
 | Gemini CLI | `/review peer priya` | Generated, untested |
@@ -116,17 +122,13 @@ Everything is read only. Setup per source is in [docs/evidence.md](docs/evidence
 | Cline | ask for the `review` skill with `peer priya` | Generated, untested |
 | Aider | "run the review workflow for peer priya" | Generated, untested |
 | Amp, Zed | "run the review workflow for peer priya" | Generated, untested |
-| Any chat tool | paste `adapters/standalone/` and say the same | Generated, untested |
+| Any chat tool | paste one file from `adapters/standalone/` as the first message, then say `start` | Generated, untested |
 
 Per-harness details, file locations and caveats are in [docs/harnesses.md](docs/harnesses.md). If you run a review end to end in one of the untested tools, open an issue and the row changes.
 
 ## Privacy
 
-Reviews contain candid judgments about real colleagues, so everything stays in `workspace/`, on your disk or in your private repository.
-Evidence gathering reads your work systems through tools you already have, such as `gh` and MCP connectors. It never writes to them.
-For a review of someone else it stays with what you could see anyway: their PRs, their tickets, channels you are in.
-Setup checks whether the repository it sits in is public and warns you if it is.
-Your AI harness still sees the files it works on, so pick one whose data policy you accept. Details in [docs/privacy.md](docs/privacy.md).
+Everything stays in `workspace/`, on your disk or in your private repository, and setup warns you if that repository is public. Evidence gathering reads your work systems through tools you already have and never writes to them; for a review of someone else it reads only what you could already see; the rules are in [docs/privacy.md](docs/privacy.md). Your AI harness still sees the files it works on, so pick one whose data policy you accept.
 
 ## Repository layout
 
@@ -151,7 +153,7 @@ scripts/                 setup.sh, evidence-github.sh, build-adapters.sh, check.
 
 ## Contributing
 
-Formats, sources, adapters and fixes are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Formats, sources, adapters and fixes are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). If you fork this repository, the *Use this template* button only appears on your fork once it is marked as a template in its GitHub settings.
 
 ## License
 
