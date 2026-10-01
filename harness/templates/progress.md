@@ -17,8 +17,8 @@ evidence: no               # yes once evidence.md exists and has been read
 
 ## Notes
 
-<One block per question, headed by its number, appended as each answer is confirmed. Write what the owner said in compact form, keep their phrases, note the examples and the follow-up answers. A skipped question gets the single note `skipped`. Anything said off the record is prefixed `off the record:` and stays out of the draft. Replace this placeholder with the first block.>
+<One block per question, headed by its number, appended as each answer is confirmed. Write what the owner said in compact form, keep their phrases, note the examples and the follow-up answers. A skipped question gets the single note `skipped`. Anything said off the record goes on its own line starting `off the record:`, after the on-record notes for that question, and stays out of the draft. Until the first block exists this section reads `Nothing yet.`>
 
 ## Draft history
 
-<One line per draft: date, what changed, what the owner asked for.>
+<One line per draft: date, what changed, what the owner asked for. Until the first draft exists this section reads `Nothing yet.`>

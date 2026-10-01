@@ -8,7 +8,7 @@ The session was started with `review peer priya`.
 
 **Harness:** I have read the principles, `config.yml`, your voice profile, the peer format, `people/priya.md`, the evidence from 22 September and your 2025 review of her. The evidence covers 22 March to 22 September from GitHub, Linear and Slack: the Nordfrakt migration, the webhook reliability work, and her reviews and lunch talk. Last year's development point was support tickets, and her people file says a rotation happened in February, so I will ask about that under question 4.
 
-Four questions, taken from `harness/formats/peer.md`. If your form uses different ones, paste them now and I will use those instead. One at a time: after each answer I will follow up once or twice, summarise, and ask you to confirm before I save. Say "skip" or "come back to this" at any point. Ready when you are.
+Four questions, taken from `harness/formats/peer.md`. If your form uses different ones, paste them now and I will use those instead. One at a time: after each answer I will follow up once or twice, summarise, and ask you to confirm before I save. Say "skip", "come back to this" or "off the record" at any point. Ready when you are.
 
 **Maya:** Go.
 

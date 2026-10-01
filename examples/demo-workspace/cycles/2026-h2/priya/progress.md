@@ -10,10 +10,10 @@ evidence: yes              # yes once evidence.md exists and has been read
 
 ## Questions
 
-1. [x] Strengths in the past 6 months, with one example
-2. [x] Skills or behaviours to develop, with the situation behind it
-3. [x] Collaboration: what worked, what could have gone better, with an example
-4. [x] Anything else for their growth or effectiveness
+1. [x] What strengths has this person demonstrated in the past 6 months
+2. [x] What skills or behaviors could this person further develop to be even more effective
+3. [x] How has collaboration with this person been over the past 6 months
+4. [x] Is there any additional feedback you'd like to share that would be helpful for this person's growth or effectiveness
 
 ## Notes
 
@@ -21,7 +21,7 @@ evidence: yes              # yes once evidence.md exists and has been read
 
 **Q2.** Goes quiet on hard problems. Example: BE-1907 customs mapping, Monday 8 to Friday 12 June, no comment for five days. Came up in Friday standup, paired that afternoon, done by end of day. Maya: "not because I knew the answer, saying the problem out loud is half of solving it". Counterexample offered by Maya without prompting: 12 May, she pulled people in within minutes. So it is "slow-burn problems, the ones with no alarm attached", not pressure. Wish: after a day of being stuck, say so in the thread. Has she told Priya: yes, in person, week after, so "it will not be a surprise". Why it matters: Maya thinks this is the one thing between Priya and the next level of scope. Postmortem action items prompt: Maya says that one is on both of them, belongs under Q3, not here.
 
-**Q3.** Worked well: reviews. Every review has a "what happens if" question. Examples Maya gave: what happens if the carrier returns a 429 mid-batch, what happens if the same event arrives twice. Maya "stopped being annoyed because they are right often enough" and now asks them herself before opening a PR. "That is the best kind of review culture and she built most of it." Disagreement: SOAP adapter, 30 June. Priya wanted it deleted at cutover, Maya wanted a flag for rollback. Argued in the thread, landed on two weeks behind a flag then hard delete, Priya deleted it 9 July. Maya: "how I want disagreements to go, quickly, in the open, with a date attached". Could have gone better: postmortem action items unassigned three weeks, "we each assumed the other was tracking them", Tomas had to ask on 4 June. Fixed since (action items get an owner in the postmortem doc now). Maya wants it in as "on both of us". Accepted from evidence: 61 reviews, 14 of them Maya's.
+**Q3.** Worked well: reviews. Every review has a "what happens if" question. Examples Maya gave: what happens if the carrier returns a 429 mid-batch, what happens if the same event arrives twice. Maya "stopped being annoyed because they are right often enough" and now asks them herself before opening a PR. "That is the best kind of review culture and she built most of it." Disagreement: SOAP adapter, 30 June. Priya wanted it deleted at cutover, Maya wanted a flag for rollback. Argued in the thread, landed on two weeks behind a flag then hard delete, Priya deleted it 9 July. Maya: "how I want disagreements to go, quickly, in the open, with a date attached". Could have gone better: postmortem action items unassigned three weeks, "we each assumed the other was tracking them", Tomas had to ask on 4 June. Fixed since, "small thing, and we have fixed it", action items get an owner in the postmortem doc now. Maya wants it in as "on both of us". Accepted from evidence: 61 reviews, 14 of them Maya's.
 
 **Q4.** Last year's Q4 was "take the lead on the next carrier integration". She did, "went better than I expected". Next: the 20 August lunch talk was "the clearest explanation of retries I have heard at Northwind" and it stayed in #backend. Maya wants her to take it to the engineering forum, because the frontend and data teams have the same problem "and do not know it yet". Support rotation: Priya set it up in February, it stuck, Maya's 2025 development point is resolved. "Her project time is hers again. Keep it that way." Maya asked to end on that.
 

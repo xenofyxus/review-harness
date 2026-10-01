@@ -1,6 +1,6 @@
 # Adapters
 
-An adapter is the small file a harness needs in order to find a Review Harness command. Every adapter says the same thing: with `AGENTS.md` loaded, follow one file under `harness/workflows/`. That is all it does. The questions, the method and the writing rules live in `harness/` and are never copied into an adapter, so a fix there reaches every harness at once.
+An adapter is the small file a harness needs in order to find a Review Harness command. Every adapter says the same thing: with `AGENTS.md` loaded, follow one file under `harness/workflows/`. That is all it does. The questions, the method and the writing rules live in `harness/` and are never copied into an adapter by hand. The standalone prompts bundle them, but the build script does the bundling, so a fix in `harness/` still reaches every harness at once.
 
 ## Source of truth
 

@@ -37,7 +37,7 @@ Follow the recipe in `harness/sources/<source>.md`. The shape is always the same
 
 For Slack in particular: search by the subject's user ID with modifiers like `has:reaction`, `is:thread`, and by the names of projects you already found in GitHub and Linear. Sort by relevance, not only by date; recency alone surfaces noise.
 
-Keep a working file as you go so nothing is lost if the session ends: write raw findings to `<workspace>/cycles/<cycle>/<slug>/evidence-raw.md`. Keep it when you are done; it is gitignored. Delete it only if the owner asks.
+Keep a working file as you go so nothing is lost if the session ends: write raw findings to `<workspace>/cycles/<cycle>/<slug>/evidence-raw.md`. Keep it when you are done; setup ignores it in git. Delete it only if the owner asks.
 
 ## 4. Theme
 

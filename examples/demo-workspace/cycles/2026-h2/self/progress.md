@@ -10,12 +10,12 @@ evidence: no               # yes once evidence.md exists and has been read
 
 ## Questions
 
-1. [ ] Most important accomplishments in the last 12 months
-2. [ ] Challenges or set-backs I faced
-3. [ ] Skills I want to improve
-4. [ ] How well I have communicated and collaborated
-5. [ ] Priorities and goals in the coming 6-12 months
-6. [ ] Anything else to add
+1. [ ] What are my most important accomplishments in the last 12 months
+2. [ ] What challenges or set-backs did I face
+3. [ ] What skills do I want to improve
+4. [ ] How well have I communicated and collaborated with my team members and other colleagues
+5. [ ] What are my priorities and goals in the coming 6-12 months
+6. [ ] Is there anything else you would like to add
 
 ## Notes
 

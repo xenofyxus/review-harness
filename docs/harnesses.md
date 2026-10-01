@@ -36,7 +36,7 @@ The same skills, installed from this repository's marketplace (`.claude-plugin/m
 
 From a shell, the same two steps are `claude plugin marketplace add xenofyxus/review-harness` and `claude plugin install review-harness@review-harness`.
 
-Start Claude Code in the folder that will hold your workspace, not in a clone of this repository. The commands are namespaced, so the first one is `/review-harness:review-setup`; it creates `config.yml` there, in `workspace/` under that folder unless you ask for the folder itself, and the other commands find it from there. Each skill reads `AGENTS.md` from the plugin root (`${CLAUDE_PLUGIN_ROOT}`) and resolves `harness/` next to it, so nothing from the plugin is copied into your folder. Generated, untested.
+Start Claude Code in the folder that will hold your workspace, not in a clone of this repository. The commands are namespaced, so the first one is `/review-harness:review-setup`; it creates `config.yml` there, in `workspace/` under that folder unless you ask for the folder itself, and the other commands find it from there. Each skill reads `AGENTS.md` from the plugin root (`${CLAUDE_PLUGIN_ROOT}`) and resolves `harness/` next to it, so nothing from the plugin is copied into your folder. `claude plugin validate` warns about the root `CLAUDE.md`; that file is for the clone path and is expected. Generated, untested.
 
 ## Cursor
 
@@ -60,7 +60,7 @@ Reads `AGENTS.md` natively. Commands are prompt files in `.github/prompts/<name>
 
 ## Windsurf and Devin Desktop
 
-Both read a root `AGENTS.md` on their own, so the entrypoint is loaded before any command runs. Commands are workflows in `.windsurf/workflows/<name>.md`, invoked `/review peer priya`; each one also opens with a line to read `AGENTS.md`, which costs nothing when it is already loaded. Caveats: workflows run only when you invoke them, they are capped at 12,000 characters (a pointer file is nowhere near), and newer versions prefer `.devin/` while `.windsurf/` still works. Generated, untested.
+Both read a root `AGENTS.md` on their own, so the entrypoint is loaded before any command runs. Commands are Windsurf workflows, files in `.windsurf/workflows/<name>.md`, invoked `/review peer priya`; each one also opens with a line to read `AGENTS.md`, which costs nothing when it is already loaded. Caveats: a Windsurf workflow runs only when you invoke it, the file is capped at 12,000 characters (a pointer file is nowhere near), and newer versions prefer `.devin/` while `.windsurf/` still works. Generated, untested.
 
 ## Roo Code
 
@@ -68,7 +68,7 @@ Reads `AGENTS.md`. Commands are `.roo/commands/<name>.md` with `description` and
 
 ## Kilo Code
 
-Reads `AGENTS.md`. Commands are `.kilo/commands/<name>.md` with a `description`. Invoke `/review peer priya`. Generated, untested.
+Reads `AGENTS.md`. Commands are `.kilo/commands/<name>.md` with `description` and `argument-hint`, the same shape as Roo. Invoke `/review peer priya`. Generated, untested.
 
 ## Cline
 
@@ -84,7 +84,7 @@ Both read `AGENTS.md` and nothing else. No command files. Say "run review-setup"
 
 ## Any chat tool
 
-For a tool with no file access, `adapters/standalone/<format>.md` is one complete paste-in prompt: the preamble, `harness/principles.md`, `harness/workflows/review.md` and that one format. Paste it as the first message of a new chat, or as the system prompt if the tool has one, then say `start`. It asks who the review is about and which language to write in, then interviews you one question at a time. Evidence, voice and status are not available this way; they need file and tool access. To resume, open a new chat, paste the prompt again, then the latest `Progress` block, and the latest draft text if one exists. Generated, untested.
+For a tool with no file access, `adapters/standalone/<format>.md` is one complete paste-in prompt: the preamble, `harness/principles.md`, `harness/workflows/review.md` and that one format. Paste it as the first message of a new chat, or as the system prompt if the tool has one, then say `start`. It asks who the review is about and which language to write in, then interviews you one question at a time. Evidence, voice and status are not available this way; they need file and tool access. To resume, open a new chat, paste the prompt again, then the latest `Progress` block (every reply that confirms an answer or shows a draft ends with one), and the latest draft text if one exists. Generated, untested.
 
 ## Adding a harness
 

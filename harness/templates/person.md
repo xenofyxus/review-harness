@@ -5,10 +5,9 @@
 **Role:** <role, team>
 **Worked together since:** <month year>
 **Handles:** github: <login> | gitlab: <username> | slack: <member ID, starts with U> | linear: <name or email> | jira: <account or email>
+<!-- Leave a handle blank if you do not know it; the evidence workflow asks once and fills it in. -->
 
 ## Background
-
-<Leave a handle blank if you do not know it; the evidence workflow will ask once and fill it in.>
 
 <Two to five sentences. Who they are, what they own, how you work together day to day. Anything a reader of your review would need to understand the context.>
 

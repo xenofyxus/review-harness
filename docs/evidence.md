@@ -4,7 +4,7 @@ The evidence workflow ([evidence.md](../harness/workflows/evidence.md)) reads wh
 
 ## Connectors and shell fallbacks
 
-Each source has a preferred path and a fallback. For GitHub and GitLab the preferred path is the CLI, `gh` or `glab`, authenticated on your machine. For Linear, Jira and Slack it is an MCP connector, a tool the harness can call directly. The fallback in every case is a token from the shell: an API key or user token in an environment variable, used with `curl`.
+Each source has a preferred path and a fallback. For GitHub and GitLab the preferred path is the CLI, `gh` or `glab`, authenticated on your machine. For Linear, Jira and Slack it is an MCP connector, a tool the harness can call directly. For GitHub the fallback is the GitHub MCP connector, where your harness has one. For the others it is a token from the shell: an API key or user token in an environment variable, used with `curl`.
 
 Whether an MCP connector is available depends on your harness and how you configured it. The shell fallbacks work anywhere the harness can run commands, which is every harness this repository is written for. They need a POSIX shell with curl; on Windows use Git Bash or WSL. [harnesses.md](./harnesses.md) lists how each harness loads the commands.
 

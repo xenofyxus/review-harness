@@ -16,14 +16,14 @@ Each file bundles `PREAMBLE.md`, `harness/principles.md`, `harness/workflows/rev
 
 1. Open the file for the review type you need and copy all of it.
 2. Paste it as the first message of a new chat, or as the system prompt if the tool has one.
-3. Say `start`. The assistant asks who the review is about and which language to write in, then interviews you one question at a time.
-4. If you have a voice profile (`workspace/voice/profile.md`), paste it right after `start`. Without one, the assistant follows the general writing rules only.
+3. Say `start`. The harness asks who the review is about and which language to write in, then interviews you one question at a time.
+4. If you have a voice profile (`workspace/voice/profile.md`), paste it right after `start`. Without one, the harness follows the general writing rules only.
 
 ## Resume
 
-Every reply that confirms an answer ends with a `Progress` block. To continue later, open a new chat, paste the prompt again, then paste the latest `Progress` block. The assistant picks up from the first unanswered question.
+Every reply that confirms an answer ends with a `Progress` block. To continue later, open a new chat, paste the prompt again, then paste the latest `Progress` block. The harness picks up from the first unanswered question.
 
-Once a draft exists, the `Progress` block also names the current draft number. To resume during drafting or iteration, paste the `Progress` block and the latest draft text together. The assistant continues iterating on that draft; it will ask for the draft if the block says one exists and none was pasted, and it never rebuilds a draft from the notes alone.
+Once a draft exists, the `Progress` block also names the current draft number. To resume during drafting or iteration, paste the `Progress` block and the latest draft text together. The harness continues iterating on that draft; it will ask for the draft if the block says one exists and none was pasted, and it never rebuilds a draft from the notes alone.
 
 ## Regenerate
 

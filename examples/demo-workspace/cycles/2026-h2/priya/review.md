@@ -12,7 +12,7 @@ The other one is the webhook work. When the dispatcher stalled on 12 May you ran
 
 When a problem is hard, you tend to disappear into it. I do the same, so I recognise it. The example I keep coming back to is the customs mapping ticket in June. It sat in progress from the Monday to the Friday without a comment. When it came up in standup on the Friday and we paired for an afternoon, it was done by the end of the day. Not because I knew the answer. Saying the problem out loud is half of solving it.
 
-Pressure is not the problem. On 12 May you pulled people in within minutes. It is the slow-burn problems, the ones with no alarm attached, where you go quiet. My wish is simple: after a day of being stuck, say so in the thread. Nobody will think less of you. The opposite, actually.
+Pressure is not the problem. On 12 May you pulled people in within minutes. It is the slow-burn problems, the ones with no alarm attached, where you go quiet. After a day of being stuck, I would rather you said so in the thread. Nobody will think less of you. The opposite, actually.
 
 I told you this in person the week after, so it will not be a surprise. I am writing it down because it is the one thing between you and the next level of scope, and I would like you to get there.
 

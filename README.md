@@ -23,7 +23,7 @@ You stay in charge of every word. Nothing goes in that you did not say, the draf
 
 ## Getting started
 
-You need an AI coding tool that can read files and run shell commands (see [Works with](#works-with)), plus `gh` logged in and any MCP connectors you already have for evidence.
+You need an AI coding tool that can read files and run shell commands, called the harness from here on (see [Works with](#works-with)), plus `gh` logged in and any MCP connectors you already have for evidence.
 
 1. **Get a copy.** Click *Use this template* on GitHub and make the new repository private, or clone this one and point `origin` at a private repository of your own before you commit anything.
 2. **Set up the workspace.** Open the folder in your harness and say "run review-setup". It asks who you are and who you review this cycle, then writes `workspace/`.
@@ -53,7 +53,7 @@ workspace/cycles/2026-h2/priya/
 
 1. `AGENTS.md` is the entrypoint. Every harness reads it, directly or through a one-line import such as `CLAUDE.md`.
 2. All logic is plain markdown under `harness/`: the principles, one workflow per command, the question formats, the source recipes, the templates.
-3. Each harness gets a thin adapter that says "follow `harness/workflows/review.md`" and nothing else. No workflow text is copied by hand; the standalone prompts are generated.
+3. Each harness gets a thin adapter that says "follow `harness/workflows/review.md`" and nothing else. No workflow text is copied by hand; the one exception, the paste-in prompts under `adapters/standalone/` for tools without file access, is generated from the same files.
 4. Your data lives in `workspace/`: config, people, voice profile, and one folder per review per cycle.
 5. Every draft is checked against the writing rules and your voice profile before you see it, and comes with flags for what is vague, contradictory, too soft or too harsh.
 

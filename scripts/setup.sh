@@ -374,6 +374,7 @@ render_person() {
       -e "s~<manager | peer | report>~$(sed_esc "$3")~g" \
       -e "s~<role, team>~$(sed_esc "$4")~g" \
       -e '/^\*\*Handles:\*\*/ s~<[^>]*>~~g' \
+      -e '/^\*\*Worked together since:\*\*/ s~<[^>]*>~~g' \
       "$TEMPLATES/person.md"
 }
 
@@ -398,6 +399,7 @@ render_progress() {
           done <<<"$qlist"
         fi
         ;;
+      '<'*) printf 'Nothing yet.\n' ;;
       *) printf '%s\n' "$line" ;;
     esac
   done <"$TEMPLATES/progress.md" \
@@ -412,8 +414,8 @@ render_voice_readme() {
   cat <<'EOF'
 # Voice samples
 
-Drop past reviews and other writing you did in this folder. Markdown or plain text, any language.
-Then run the voice workflow (`review-voice`) to build `voice/profile.md` from them.
+Drop past reviews and other writing here, then run the voice workflow.
+This folder and any notes.md are yours to fill by hand; the voice workflow writes voice/profile.md.
 EOF
 }
 

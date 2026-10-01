@@ -16,15 +16,15 @@ All of it is plain text on your disk. No workflow uploads anything itself. What 
 
 ## Evidence gathering only reads
 
-The evidence workflow queries GitHub, GitLab, Linear, Jira and Slack for what the subject did in the window. It never writes: no comments, no reactions, no messages, no issue updates. The recipes in [harness/sources/](../harness/sources/) are search and read calls only, and [evidence.md](../harness/workflows/evidence.md) says so near the top.
+The evidence workflow queries GitHub, GitLab, Linear, Jira and Slack for what the subject did in the window. It never writes: no comments, no reactions, no messages, no issue updates. The recipes in [harness/sources/](../harness/sources/) are search and read calls only, and the evidence workflow ([harness/workflows/evidence.md](../harness/workflows/evidence.md)) says so near the top.
 
-There is one thing to know about Slack. A user token, or a Slack MCP connector acting as you, searches everything you can see, including your own direct messages and the private channels you are in. The recipes filter by the subject's member ID, so results are their messages in places you already are, but the search has that reach. If that is not acceptable, leave `slack` out of `evidence.sources` in `config.yml`.
+Slack reaches further than the other sources. A user token, or a Slack MCP connector acting as you, searches everything you can see, including your own direct messages and the private channels you are in. The recipes filter by the subject's member ID, so results are their messages in places you already are, but the search has that reach. If that is not acceptable, leave `slack` out of `evidence.sources` in `config.yml`.
 
 ## Private repo or gitignore
 
 The workspace is committed by default, so a private clone of this repository doubles as your review archive with history. Setup checks the visibility of the repository it finds itself in and warns if it is public.
 
-If you would rather keep the workspace out of git entirely, uncomment the two `workspace/**` lines in [.gitignore](../.gitignore). Either choice is fine. Committing to a public repository is not, and the harness will say so.
+If you would rather keep the workspace out of git entirely, uncomment the `workspace/**` and `!workspace/README.md` lines in [.gitignore](../.gitignore). Either choice is fine. Committing to a public repository is not, and the harness will say so.
 
 ## Reviewing other people
 

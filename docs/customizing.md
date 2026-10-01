@@ -27,7 +27,7 @@ The questions themselves are separate. If your form is in another language, past
 
 ## Adjust hints and checklists
 
-Hints shape the follow-up questions. Checklists shape what the draft review flags. Both live in the format file, so edit them in your workspace copy. A hint is per question and reads like advice to an interviewer:
+Hints shape the follow-up questions. Checklists shape what is flagged under the draft. Both live in the format file, so edit them in your workspace copy. A hint is per question and reads like advice to an interviewer:
 
 ```markdown
 **Q2.** Listen for a behaviour and a situation. Follow up with "have you told them?".
